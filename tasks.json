@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build and Run",
+            "type": "shell",
+            "command": "mingw32-make -f MakeFile; ./bin/main.exe",
+            "problemMatcher": [
+                "$jshint"
+            ]
+        },
+        {
+            "label": "Build only",
+            "type": "shell",
+            "command": "mingw32-make -f MakeFile"
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "./bin/main.exe"
+        }
+    ]
+}
