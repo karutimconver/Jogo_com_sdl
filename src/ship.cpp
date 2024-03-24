@@ -71,11 +71,11 @@ void Ship::update(const Uint8* keyboard_state) {
 
 void Ship::draw(SDL_Renderer* renderer) {
     // Coordenadas Polares
-    unsigned short int p1_angle    = angle;                                 // ângulo em graus do ponto 1
+    unsigned short int p1_angle    = (180 + (360 * 100)) + angle;      // ângulo em graus do ponto 1
     unsigned short int p1_distance = 16;                                    // distancia em graus do ponto 1
-    unsigned short int p2_angle    = 120 + angle;                           // ângulo em graus do ponto 2
+    unsigned short int p2_angle    = 120 + (180 + (360 * 100)) + angle;     // ângulo em graus do ponto 2
     unsigned short int p2_distance = 12;                                    // distancia em graus do ponto 2
-    unsigned short int p3_angle    = 240  + angle;                          // ângulo em graus do ponto 3
+    unsigned short int p3_angle    = 240 + (180 + (360 * 100)) + angle;     // ângulo em graus do ponto 3
     unsigned short int p3_distance = 12;                                    // distancia em graus do ponto 3
 
   

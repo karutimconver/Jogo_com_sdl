@@ -13,11 +13,11 @@ private:
     int thrust     = 7;                        // accelaração por segundo
     int friction   = 1;                         // fricção por segundo
 public:
-    unsigned short int angle = 180; // ângulo em graus
-    unsigned short int lives;
     float x;
     float y;
-    float angular_speed = 3;      // velocidade com que gira em graus por tick 
+    unsigned short int angle = 90; // ângulo em graus
+    float angular_speed = 2;       // velocidade com que gira em graus por tick 
+    unsigned short int lives;
 
     Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [3]);
     ~Ship();
