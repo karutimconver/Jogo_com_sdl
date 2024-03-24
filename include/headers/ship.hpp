@@ -7,10 +7,11 @@
 
 class Ship {
 private:
-    std::unordered_map<std::string, int> keys;
-    Vec2 velocity;
-    int thrust    = 10;
-    int friction  = 5;
+    std::unordered_map<std::string, int> keys;  // Teclas de controlos
+    Vec2 velocity;                              // Vetor da velocidade
+    bool thrusting = false;                     // Representa se está a acelarar ou não
+    int thrust     = 10;                        // accelaração por segundo
+    int friction   = 5;                         // fricção por segundo
 public:
     unsigned short int angle = 0; // ângulo em graus
     unsigned short int lives;

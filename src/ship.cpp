@@ -35,13 +35,14 @@ void Ship::rotate(const Uint8* keyboard_state) {
 void Ship::controls(const Uint8* keyboard_state) {
   this->rotate(keyboard_state);
 
-  if (keyboard_state[keys["UP"]]) {
-
-  }
+  if (keyboard_state[keys["UP"]])
+    thrusting = true;
+  else
+    thrusting = false;
 };
 
 void Ship::move() {
-  
+
 }
 
 // -----------------
@@ -49,8 +50,7 @@ void Ship::move() {
 // -----------------
 
 void Ship::update(const Uint8* keyboard_state) {
-  // this->angle += this->angular_speed;
-  this->rotate(keyboard_state);
+  this->controls(keyboard_state);
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
