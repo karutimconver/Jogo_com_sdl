@@ -5,9 +5,9 @@
 #define SCREEN_HEIGH 720
 #define DEBUGGING false
 
-#define DT 1/120
+#define DT 1.0L/120.0L
 
-struct Vec2 {
-    float x = 0;
-    float y = 0;
+struct Vec2d {
+    double x = 0;
+    double y = 0;
 };

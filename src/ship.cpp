@@ -42,7 +42,20 @@ void Ship::controls(const Uint8* keyboard_state) {
 };
 
 void Ship::move() {
+  if (thrusting) {
+    velocity.x -= thrust * cos(angle * M_PI / 180);
+    velocity.y -= thrust * sin(angle * M_PI / 180);
+  }
 
+  apply_friction();
+
+  x += velocity.x * DT;
+  y += velocity.y * DT;
+};
+
+void Ship::apply_friction() {
+  velocity.x -= friction * DT * velocity.x;
+  velocity.y -= friction * DT * velocity.y;
 }
 
 // -----------------
@@ -51,26 +64,29 @@ void Ship::move() {
 
 void Ship::update(const Uint8* keyboard_state) {
   this->controls(keyboard_state);
+  this->move();
+  std::cout << "velocity.x: " << (long double) velocity.x * DT << "\n";
+  std::cout << "velocity.y: " << (long double) velocity.y * DT<< "\n";
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
     // Coordenadas Polares
-    unsigned short int p1_angle    = 90 + (180 + (360 * 100)) + angle;        // ângulo em graus do ponto 1
+    unsigned short int p1_angle    = angle;                                 // ângulo em graus do ponto 1
     unsigned short int p1_distance = 16;                                    // distancia em graus do ponto 1
-    unsigned short int p2_angle    = 210 + (180 + (360 * 100)) + angle;       // ângulo em graus do ponto 2
+    unsigned short int p2_angle    = 120 + angle;                           // ângulo em graus do ponto 2
     unsigned short int p2_distance = 12;                                    // distancia em graus do ponto 2
-    unsigned short int p3_angle    = 330 + (180 + (360 * 100)) + angle;       // ângulo em graus do ponto 3
+    unsigned short int p3_angle    = 240  + angle;                          // ângulo em graus do ponto 3
     unsigned short int p3_distance = 12;                                    // distancia em graus do ponto 3
 
   
     // Coordenadas Cartesianas
     // As funções sin() e cos() recebem um ângulo medido em radianos. A(radianos) = A(graus) * pi / 180; A - ângulo
-    unsigned short int x1 = x + p1_distance * cos(p1_angle * M_PI / 180);
-    unsigned short int y1 = y + p1_distance * sin(p1_angle * M_PI / 180);
-    unsigned short int x2 = x + p2_distance * cos(p2_angle * M_PI / 180);
-    unsigned short int y2 = y + p2_distance * sin(p2_angle * M_PI / 180);
-    unsigned short int x3 = x + p3_distance * cos(p3_angle * M_PI / 180);
-    unsigned short int y3 = y + p3_distance * sin(p3_angle * M_PI / 180);
+    unsigned short int x1 = round(x + p1_distance * cos(p1_angle * M_PI / 180));
+    unsigned short int y1 = round(y + p1_distance * sin(p1_angle * M_PI / 180));
+    unsigned short int x2 = round(x + p2_distance * cos(p2_angle * M_PI / 180));
+    unsigned short int y2 = round(y + p2_distance * sin(p2_angle * M_PI / 180));
+    unsigned short int x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
+    unsigned short int y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
     unsigned short int val = aatrigonRGBA(renderer, x1, y1, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
     
