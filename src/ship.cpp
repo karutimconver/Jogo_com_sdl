@@ -24,13 +24,15 @@ Ship::~Ship() {
 // | Controlos e Movimento |
 // -------------------------
 
-
+void Ship::rotate() {
+  
+}
 
 // -----------------
 // | Ciclo do jogo |
 // -----------------
 
-void Ship::update() {
+void Ship::update(const Uint8* keyboard_state) {
   this->angle += this->angular_speed;
 };
 

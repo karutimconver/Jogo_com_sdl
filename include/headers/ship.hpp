@@ -17,6 +17,8 @@ public:
 
     Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [3]);
     ~Ship();
-    void update();
+    void rotate();
+    void controls();
+    void update(const Uint8* keybaoard_state);
     void draw(SDL_Renderer* renderer);
 };

@@ -21,7 +21,8 @@ void Game::gameLoop() {
         handleEvents();
         
         if (gameState == GameState::RUNNING) {
-            player1->update();        
+            const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
+            player1->update(keyboard_state);
         }
 
         Uint64 end = SDL_GetPerformanceCounter();
