@@ -17,5 +17,6 @@ public:
 
     Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [3]);
     ~Ship();
+    void update();
     void draw(SDL_Renderer* renderer);
 };

@@ -21,7 +21,7 @@ void Game::gameLoop() {
         handleEvents();
         
         if (gameState == GameState::RUNNING) {
-            player1->angle -= player1->angular_speed;           
+            player1->update();        
         }
 
         Uint64 end = SDL_GetPerformanceCounter();

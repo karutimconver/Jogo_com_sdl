@@ -2,9 +2,10 @@
 #include <headers/globals.hpp>
 #include <iostream>
 
-static double d2r(double d) {
-  return (d / 180.0) * ((double) M_PI);
-}
+
+// ---------------------------
+// | Construtore e Destrutor |
+// ---------------------------
 
 Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [3]) {
     this->lives = lives;
@@ -17,6 +18,20 @@ Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y,
 
 Ship::~Ship() {
     
+};
+
+// -------------------------
+// | Controlos e Movimento |
+// -------------------------
+
+
+
+// -----------------
+// | Ciclo do jogo |
+// -----------------
+
+void Ship::update() {
+  this->angle += this->angular_speed;
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
