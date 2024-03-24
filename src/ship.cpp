@@ -32,6 +32,18 @@ void Ship::rotate(const Uint8* keyboard_state) {
     this->angle -= angular_speed;
 };
 
+void Ship::controls(const Uint8* keyboard_state) {
+  this->rotate(keyboard_state);
+
+  if (keyboard_state[keys["UP"]]) {
+
+  }
+};
+
+void Ship::move() {
+  
+}
+
 // -----------------
 // | Ciclo do jogo |
 // -----------------

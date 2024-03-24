@@ -19,6 +19,7 @@ public:
     ~Ship();
     void rotate(const Uint8* keyboard_state);
     void controls(const Uint8* keyboard_state);
+    void move();
     void update(const Uint8* keybaoard_state);
     void draw(SDL_Renderer* renderer);
 };
