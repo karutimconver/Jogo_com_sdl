@@ -8,7 +8,8 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 };
 
 void Game::run() {
-    player1 = new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2);
+    int player1_keys [3] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W};
+    player1 = new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys);
     
     gameLoop();
 }
@@ -20,7 +21,7 @@ void Game::gameLoop() {
         handleEvents();
         
         if (gameState == GameState::RUNNING) {
-            player1->angle++;           
+            player1->angle -= player1->angular_speed;           
         }
 
         Uint64 end = SDL_GetPerformanceCounter();

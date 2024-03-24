@@ -6,10 +6,13 @@ static double d2r(double d) {
   return (d / 180.0) * ((double) M_PI);
 }
 
-Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y) {
+Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [3]) {
     this->lives = lives;
     this->x = x;
     this->y = y;
+    this->keys.insert({"RIGHT", keys[0]});
+    this->keys.insert({"LEFT", keys[1]});
+    this->keys.insert({"UP", keys[2]});
 };
 
 Ship::~Ship() {
@@ -18,12 +21,12 @@ Ship::~Ship() {
 
 void Ship::draw(SDL_Renderer* renderer) {
     // Coordenadas Polares
-    unsigned short int p1_angle    = 90 + angle;        // ângulo em graus do ponto 1
-    unsigned short int p1_distance = 16;                // distancia em graus do ponto 1
-    unsigned short int p2_angle    = 210 + angle;       // ângulo em graus do ponto 2
-    unsigned short int p2_distance = 12;                 // distancia em graus do ponto 2
-    unsigned short int p3_angle    = 330 + angle;       // ângulo em graus do ponto 3
-    unsigned short int p3_distance = 12;                 // distancia em graus do ponto 3
+    unsigned short int p1_angle    = (360 * 100) + 90 + angle;        // ângulo em graus do ponto 1
+    unsigned short int p1_distance = 16;                              // distancia em graus do ponto 1
+    unsigned short int p2_angle    = (360 * 100) + 210 + angle;       // ângulo em graus do ponto 2
+    unsigned short int p2_distance = 12;                              // distancia em graus do ponto 2
+    unsigned short int p3_angle    = (360 * 100) + 330 + angle;       // ângulo em graus do ponto 3
+    unsigned short int p3_distance = 12;                              // distancia em graus do ponto 3
 
   
     // Coordenadas Cartesianas
