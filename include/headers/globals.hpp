@@ -8,6 +8,6 @@
 #define DT 1/120
 
 struct Vec2 {
-    float x;
-    float y;
+    float x = 0;
+    float y = 0;
 };

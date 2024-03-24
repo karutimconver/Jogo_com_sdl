@@ -8,6 +8,9 @@
 class Ship {
 private:
     std::unordered_map<std::string, int> keys;
+    Vec2 velocity;
+    int thrust    = 10;
+    int friction  = 5;
 public:
     unsigned short int angle = 0; // ângulo em graus
     unsigned short int lives;
@@ -21,5 +24,6 @@ public:
     void controls(const Uint8* keyboard_state);
     void move();
     void update(const Uint8* keybaoard_state);
+    void aply_friction();
     void draw(SDL_Renderer* renderer);
 };
