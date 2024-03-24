@@ -24,16 +24,21 @@ Ship::~Ship() {
 // | Controlos e Movimento |
 // -------------------------
 
-void Ship::rotate() {
-  
-}
+void Ship::rotate(const Uint8* keyboard_state) {
+  if (keyboard_state[keys["RIGHT"]]) 
+    this->angle += angular_speed;
+
+  if (keyboard_state[keys["LEFT"]])
+    this->angle -= angular_speed;
+};
 
 // -----------------
 // | Ciclo do jogo |
 // -----------------
 
 void Ship::update(const Uint8* keyboard_state) {
-  this->angle += this->angular_speed;
+  // this->angle += this->angular_speed;
+  this->rotate(keyboard_state);
 };
 
 void Ship::draw(SDL_Renderer* renderer) {

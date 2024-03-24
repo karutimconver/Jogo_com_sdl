@@ -13,12 +13,12 @@ public:
     unsigned short int lives;
     unsigned short int x;
     unsigned short int y;
-    float angular_speed = 2; // velocidade com que gira em graus por tick 
+    float angular_speed = 2;      // velocidade com que gira em graus por tick 
 
     Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [3]);
     ~Ship();
-    void rotate();
-    void controls();
+    void rotate(const Uint8* keyboard_state);
+    void controls(const Uint8* keyboard_state);
     void update(const Uint8* keybaoard_state);
     void draw(SDL_Renderer* renderer);
 };
