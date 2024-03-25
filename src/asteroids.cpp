@@ -60,11 +60,12 @@ void Asteroid::draw(SDL_Renderer* renderer) {
     for (int j = 0; j < this->vertices; j++) {
         array_x[j] = round(x + points[j][0] * cos(points[j][1] * M_PI / 180));
         array_y[j] = round(y + points[j][0] * sin(points[j][1] * M_PI / 180));
-        std::cout << array_x[j] << " " << array_y[j] << "\n";
     }
-    std::cout << "\n-----------\n";
 
     aapolygonRGBA(renderer, array_x, array_y, this->vertices, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
-    
+    if (DEBUGGING) {
+      SDL_RenderDrawPoint(renderer, x, y);
+      aacircleRGBA(renderer, x, y, radius, 255, 120, 120, SDL_ALPHA_OPAQUE);
+    }
 };
