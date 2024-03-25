@@ -47,10 +47,10 @@ void Asteroid::draw(SDL_Renderer* renderer) {
     }
 
     // Criar dois arrays de coordenas cartesianas: x e y.
-    Sint16 x;
-    Sint16 y;
+    Sint16 x[vertices];
+    Sint16 y[vertices];
 
     for (int i = 0; i < vertices; i++) {
-        
+        x[i] = round(this->x + points[i][0] * cos(points[i][1] * M_PI / 180));
     }
 };
