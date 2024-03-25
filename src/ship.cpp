@@ -2,7 +2,6 @@
 #include <headers/globals.hpp>
 #include <iostream>
 
-
 // ---------------------------
 // | Construtore e Destrutor |
 // ---------------------------
@@ -20,9 +19,9 @@ Ship::~Ship() {
     
 };
 
-// -------------------------
-// | Controlos e Movimento |
-// -------------------------
+// -------------
+// | Controlos |
+// -------------
 
 void Ship::rotate(const Uint8* keyboard_state) {
   if (keyboard_state[keys["RIGHT"]]) 
@@ -40,6 +39,10 @@ void Ship::controls(const Uint8* keyboard_state) {
   else
     thrusting = false;
 };
+
+// -------------
+// | Movimento |
+// -------------
 
 void Ship::move() {
   if (thrusting) {
@@ -59,24 +62,39 @@ void Ship::apply_friction() {
 }
 
 // -----------------
+// | Ecrã infinito |
+// -----------------
+
+void Ship::screen_wrap(){
+  if (this->y + this->radius < 0)
+    this->y = SCREEN_HEIGH + this->radius;
+  else if (this->y - this->radius > SCREEN_HEIGH)
+    this->y = 0 - this->radius;
+
+  if (this->x + this->radius < 0)
+    this->x = SCREEN_WIDTH + this->radius;
+  else if (this->x - this->radius > SCREEN_WIDTH)
+    this->x = 0 - this->radius; 
+};
+
+// -----------------
 // | Ciclo do jogo |
 // -----------------
 
 void Ship::update(const Uint8* keyboard_state) {
   this->controls(keyboard_state);
   this->move();
-  std::cout << "velocity.x: " << (long double) velocity.x * DT << "\n";
-  std::cout << "velocity.y: " << (long double) velocity.y * DT<< "\n";
+  this->screen_wrap();
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
     // Coordenadas Polares
     unsigned short int p1_angle    = (180 + (360 * 100)) + angle;      // ângulo em graus do ponto 1
-    unsigned short int p1_distance = 16;                                    // distancia em graus do ponto 1
-    unsigned short int p2_angle    = 120 + (180 + (360 * 100)) + angle;     // ângulo em graus do ponto 2
-    unsigned short int p2_distance = 12;                                    // distancia em graus do ponto 2
-    unsigned short int p3_angle    = 240 + (180 + (360 * 100)) + angle;     // ângulo em graus do ponto 3
-    unsigned short int p3_distance = 12;                                    // distancia em graus do ponto 3
+    unsigned short int p1_distance = 14;                                    // distancia em graus do ponto 1
+    unsigned short int p2_angle    = 130 + (180 + (360 * 100)) + angle;     // ângulo em graus do ponto 2
+    unsigned short int p2_distance = 13;                                    // distancia em graus do ponto 2
+    unsigned short int p3_angle    = 230 + (180 + (360 * 100)) + angle;     // ângulo em graus do ponto 3
+    unsigned short int p3_distance = 13;                                    // distancia em graus do ponto 3
 
   
     // Coordenadas Cartesianas
@@ -92,5 +110,6 @@ void Ship::draw(SDL_Renderer* renderer) {
     
     if (DEBUGGING) {
       SDL_RenderDrawPoint(renderer, x, y);
+      aacircleRGBA(renderer, x, y, radius, 255, 120, 120, SDL_ALPHA_OPAQUE);
     }
 };

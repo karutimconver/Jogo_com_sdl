@@ -1,9 +1,9 @@
 #pragma once
 
-#include <iostream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <headers/ship.hpp>
+#include <iostream>
 
 enum class GameState {RUNNING, EXIT};
 
