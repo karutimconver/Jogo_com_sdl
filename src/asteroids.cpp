@@ -52,5 +52,9 @@ void Asteroid::draw(SDL_Renderer* renderer) {
 
     for (int i = 0; i < vertices; i++) {
         x[i] = round(this->x + points[i][0] * cos(points[i][1] * M_PI / 180));
+        y[i] = round(this->y + points[i][0] * sin(points[i][1] * M_PI / 180));
     }
+
+    // Desenhar
+    
 };
