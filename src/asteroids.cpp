@@ -41,6 +41,6 @@ void Asteroid::draw(SDL_Renderer* renderer) {
     float points[vertices][2];
     for (int i; i < vertices; i++) {
         float pdistance = radius + (((rand() % 20) * 0.1) - 1);
-        float pangle = radius + (((rand() % 20) * 0.1) - 1);
+        float pangle = radius + (((rand() % 20) * 0.1) - 1) + (360 / i);
     }
 };
