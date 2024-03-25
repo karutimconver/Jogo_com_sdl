@@ -37,10 +37,20 @@ void Asteroid::update() {
 };
 
 void Asteroid::draw(SDL_Renderer* renderer) {
-    // A criar um array de pontos nas coordenadas polares
+    // Criar um array de pontos nas coordenadas polares
     float points[vertices][2];
-    for (int i; i < vertices; i++) {
+    for (int i = 0; i < vertices; i++) {
         float pdistance = radius + (((rand() % 20) * 0.1) - 1);
         float pangle = radius + (((rand() % 20) * 0.1) - 1) + (360 / i);
+        points[vertices][0] = pdistance;
+        points[vertices][1] = pangle;
+    }
+
+    // Criar dois arrays de coordenas cartesianas: x e y.
+    Sint16 x;
+    Sint16 y;
+
+    for (int i = 0; i < vertices; i++) {
+        
     }
 };
