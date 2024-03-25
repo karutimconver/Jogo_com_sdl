@@ -4,7 +4,7 @@
         {
             "label": "Build and Run",
             "type": "shell",
-            "command": "mingw32-make -f MakeFile; ./bin/main.exe",
+            "command": "mingw32-make -f MakeFile; ./bin/asteroids.exe",
             "problemMatcher": [
                 "$jshint"
             ]
@@ -17,12 +17,12 @@
         {
             "label": "Run",
             "type": "shell",
-            "command": "./bin/main.exe"
+            "command": "./bin/asteroids.exe"
         },
         {
             "label": "Build to distribute",
             "type": "shell",
-            "command": "g++ -Iinclude -Iinclude/SDL -Iinclude/headers -Llib -o bin/main src/*.cpp -lmingw32 -lSDL2main -lSDL2_gfx -lSDL2 -lSDL2_image -mwindows"
+            "command": "g++ -Iinclude -Iinclude/SDL -Iinclude/headers -Llib -o bin/asteroids src/*.cpp -lmingw32 -lSDL2main -lSDL2_gfx -lSDL2 -lSDL2_image -mwindows"
         }
     ]
 }
