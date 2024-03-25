@@ -5,10 +5,21 @@
 #include <headers/ship.hpp>
 #include <headers/asteroids.hpp>
 #include <iostream>
+#include <vector>
 
 enum class GameState {RUNNING, EXIT};
 
 class Game {
+private:
+    
+    void gameLoop();
+    void handleEvents();
+
+    SDL_Window* _window = nullptr;
+    SDL_Renderer* _renderer = nullptr;
+
+    long double dt;
+
 public:
     GameState gameState = GameState::RUNNING;
 
@@ -19,13 +30,5 @@ public:
 
     Ship* player1 = nullptr;
     Ship* player2 = nullptr;
-private:
-    
-    void gameLoop();
-    void handleEvents();
-
-    SDL_Window* _window = nullptr;
-    SDL_Renderer* _renderer = nullptr;
-
-    long double dt;
+    std::vector<Asteroid> asteroids; 
 };
