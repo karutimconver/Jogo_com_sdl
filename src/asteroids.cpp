@@ -56,4 +56,6 @@ void Asteroid::draw(SDL_Renderer* renderer) {
         std::cout << array_x[j] << " " << array_y[j] << "\n";
     }
     std::cout << "\n-----------\n";
+
+    aapolygonRGBA(renderer, array_x, array_y, this->vertices, 255, 255, 255, SDL_ALPHA_OPAQUE);
 };
