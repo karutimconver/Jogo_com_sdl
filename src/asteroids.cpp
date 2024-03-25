@@ -56,5 +56,10 @@ void Asteroid::draw(SDL_Renderer* renderer) {
     }
 
     // Desenhar
-    
+    aapolygonRGBA(renderer, x, y, vertices, 255, 255, 255, SDL_ALPHA_OPAQUE);
+
+    if (DEBUGGING) {
+      SDL_RenderDrawPoint(renderer, this->x, this->y);
+      aacircleRGBA(renderer, this->x, this->y, radius, 255, 120, 120, SDL_ALPHA_OPAQUE);
+    }
 };
