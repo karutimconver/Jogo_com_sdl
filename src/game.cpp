@@ -1,8 +1,8 @@
 #include <headers/game.hpp>
 
-// ---------------------------
-// | Construtor e Destruidor |
-// ---------------------------
+// ------------------------------
+// | Construtor e Inicializador |
+// ------------------------------
 
 Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     SDL_Init(SDL_INIT_EVERYTHING);
