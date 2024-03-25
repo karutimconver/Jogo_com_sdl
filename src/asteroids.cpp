@@ -9,10 +9,13 @@ Asteroid::Asteroid(int x, int y, int size) {
     this->y = y;
     this->size = size;
     this->radius = r * size;
+    this->v_distance_array = new float [this->vertices];
+    this->v_angle_array = new float [this->vertices];
 };
 
 Asteroid::~Asteroid() {
-
+    delete v_distance_array;
+    delete v_angle_array;
 };
 
 // -------------
@@ -40,8 +43,8 @@ void Asteroid::draw(SDL_Renderer* renderer) {
     // Criar array de pontos defenidos por coordenadas polares
     float points[this->vertices][2];
     for (int i = 0; i < this->vertices; i++) {
-        float p_distance = radius + (((rand() % 20) * 0.1) - 1);
-        float p_angle = angle + (((rand() % 20) * 0.1) - 1) + ((380 / vertices) * (i + 1));
+        float p_distance = radius + (((rand() % 50) * 0.1) - 1);
+        float p_angle = angle + (((rand() % 50) * 0.1) - 1) + ((380 / vertices) * (i + 1));
         points[i][0] = p_distance;
         points[i][1] = p_angle;
     }
