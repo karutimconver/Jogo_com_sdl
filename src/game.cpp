@@ -1,5 +1,9 @@
 #include <headers/game.hpp>
 
+// ---------------------------
+// | Construtor e Destruidor |
+// ---------------------------
+
 Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -13,6 +17,10 @@ void Game::run() {
     
     gameLoop();
 }
+
+// -----------------
+// | Ciclo de jogo |
+// -----------------
 
 void Game::gameLoop() {
     while (gameState != GameState::EXIT) {
@@ -32,6 +40,17 @@ void Game::gameLoop() {
     }
 }
 
+void Game::draw() {
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+    SDL_RenderClear(_renderer);
+    player1->draw(_renderer);
+    SDL_RenderPresent(_renderer);
+}
+
+// -----------------
+// | SDL Callbacks |
+// -----------------
+
 void Game::handleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
@@ -41,11 +60,4 @@ void Game::handleEvents() {
             gameState = GameState::EXIT;
             break;
     }
-}
-
-void Game::draw() {
-    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
-    SDL_RenderClear(_renderer);
-    player1->draw(_renderer);
-    SDL_RenderPresent(_renderer);
 }

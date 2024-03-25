@@ -3,7 +3,7 @@
 #include <iostream>
 
 // ---------------------------
-// | Construtore e Destrutor |
+// | Construtore e Destruidor |
 // ---------------------------
 
 Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [3]) {
