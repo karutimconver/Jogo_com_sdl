@@ -11,6 +11,10 @@ Asteroid::Asteroid(int x, int y, int size) {
     this->radius = r * size;
     this->v_distance_array = new float [this->vertices];
     this->v_angle_array = new float [this->vertices];
+    for (int i = 0; i < this->vertices; i++) {
+        v_distance_array[i] = ((rand() % 50) * 0.1) - 1;
+        v_angle_array[i] = ((rand() % 50) * 0.1) - 1;
+    }
 };
 
 Asteroid::~Asteroid() {
@@ -43,8 +47,8 @@ void Asteroid::draw(SDL_Renderer* renderer) {
     // Criar array de pontos defenidos por coordenadas polares
     float points[this->vertices][2];
     for (int i = 0; i < this->vertices; i++) {
-        float p_distance = radius + (((rand() % 50) * 0.1) - 1);
-        float p_angle = angle + (((rand() % 50) * 0.1) - 1) + ((380 / vertices) * (i + 1));
+        float p_distance = radius + v_distance_array[i];
+        float p_angle = angle + v_angle_array[i] + ((380 / vertices) * (i + 1));
         points[i][0] = p_distance;
         points[i][1] = p_angle;
     }
@@ -61,4 +65,6 @@ void Asteroid::draw(SDL_Renderer* renderer) {
     std::cout << "\n-----------\n";
 
     aapolygonRGBA(renderer, array_x, array_y, this->vertices, 255, 255, 255, SDL_ALPHA_OPAQUE);
+
+    
 };
