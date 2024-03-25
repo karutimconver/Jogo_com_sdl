@@ -3,6 +3,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <headers/ship.hpp>
+#include <headers/asteroids.hpp>
 #include <iostream>
 
 enum class GameState {RUNNING, EXIT};

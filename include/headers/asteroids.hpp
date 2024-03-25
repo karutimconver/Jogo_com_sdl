@@ -17,9 +17,9 @@ private:
 public:
     float x;
     float y;
-    int radius;                     // raio do asteroide (caixa de colisão) raio = r * size
+    unsigned short int radius;      // raio do asteroide (caixa de colisão) raio = r * size
 
-    Asteroid();
+    Asteroid(int x, int y, int size);
     ~Asteroid();
     void update();
     void draw(SDL_Renderer* renderer);
