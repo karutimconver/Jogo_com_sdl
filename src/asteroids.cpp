@@ -11,3 +11,31 @@ Asteroid::Asteroid(int x, int y, int size) {
     this->radius = r * size;
 };
 
+Asteroid::~Asteroid() {
+
+};
+
+// -------------
+// | Movimento |
+// -------------
+
+void Asteroid::rotate() {
+
+};
+
+void Asteroid::move() {
+
+};
+
+// -----------------
+// | Ciclo do jogo |
+// -----------------
+
+void Asteroid::update() {
+    this->move();
+    this->rotate();
+};
+
+void Asteroid::draw(SDL_Renderer* renderer) {
+
+};
