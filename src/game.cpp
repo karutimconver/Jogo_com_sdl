@@ -43,7 +43,16 @@ void Game::gameLoop() {
 void Game::draw() {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
+    // Mandar para aqui os desenhos
+
     player1->draw(_renderer);
+    
+    for (Asteroid &asteroid : asteroids) {
+        asteroid.draw(_renderer);
+    }
+
+    // Fim dos desenhos
+    // A renderizar
     SDL_RenderPresent(_renderer);
 }
 
