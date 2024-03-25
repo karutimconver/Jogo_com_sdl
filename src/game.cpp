@@ -14,6 +14,7 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 void Game::run() {
     int player1_keys [3] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W};
     player1 = new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys);
+    asteroid = new Asteroid(50, 50, 4);
     
     gameLoop();
 }
@@ -47,9 +48,7 @@ void Game::draw() {
 
     player1->draw(_renderer);
     
-    for (Asteroid &asteroid : asteroids) {
-        asteroid.draw(_renderer);
-    }
+    asteroid->draw(_renderer);
 
     // Fim dos desenhos
     // A renderizar

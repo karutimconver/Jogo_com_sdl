@@ -30,5 +30,5 @@ public:
 
     Ship* player1 = nullptr;
     Ship* player2 = nullptr;
-    std::vector<Asteroid> asteroids; 
+    Asteroid* asteroid; 
 };
