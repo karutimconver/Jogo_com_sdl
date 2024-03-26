@@ -6,13 +6,14 @@
 // | Construtore e Destruidor |
 // ---------------------------
 
-Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [3]) {
+Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4]) {
     this->lives = lives;
     this->x = x;
     this->y = y;
     this->keys.insert({"RIGHT", keys[0]});
     this->keys.insert({"LEFT", keys[1]});
     this->keys.insert({"UP", keys[2]});
+    this->keys.insert({"SHOT", keys[3]});
 };
 
 Ship::~Ship() {
@@ -31,13 +32,19 @@ void Ship::rotate(const Uint8* keyboard_state) {
     this->angle -= angular_speed;
 };
 
-void Ship::controls(const Uint8* keyboard_state) {
+void Ship::controls(const Uint8* keyboard_state, std::vector<Laser*>* lasers) {
   this->rotate(keyboard_state);
 
   if (keyboard_state[keys["UP"]])
     thrusting = true;
   else
     thrusting = false;
+
+  if (keyboard_state[keys["SHOT"]]) {
+    unsigned short int x1 = round(x + 14 * cos((180 + angle) * M_PI / 180));
+    unsigned short int y1 = round(y + 14 * sin((180 + angle) * M_PI / 180));
+    lasers->push_back(new Laser(x1, y1, 180 + angle, lasers));
+  }
 };
 
 // -------------
@@ -81,15 +88,15 @@ void Ship::screen_wrap(){
 // | Ciclo do jogo |
 // -----------------
 
-void Ship::update(const Uint8* keyboard_state) {
-  this->controls(keyboard_state);
+void Ship::update(const Uint8* keyboard_state, std::vector<Laser*>* lasers) {
+  this->controls(keyboard_state, lasers);
   this->move();
   this->screen_wrap();
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
     // Coordenadas Polares
-    unsigned short int p1_angle    = (180 + (360 * 100)) + angle;      // ângulo em graus do ponto 1
+    unsigned short int p1_angle    = (180 + (360 * 100)) + angle;           // ângulo em graus do ponto 1
     unsigned short int p1_distance = 14;                                    // distancia em graus do ponto 1
     unsigned short int p2_angle    = 130 + (180 + (360 * 100)) + angle;     // ângulo em graus do ponto 2
     unsigned short int p2_distance = 13;                                    // distancia em graus do ponto 2
