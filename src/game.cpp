@@ -32,6 +32,10 @@ void Game::gameLoop() {
         if (gameState == GameState::RUNNING) {
             const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
             player1->update(keyboard_state);
+
+            for (Asteroid* asteroid : asteroids) {
+                asteroid->update();
+            }
         }
 
         Uint64 end = SDL_GetPerformanceCounter();

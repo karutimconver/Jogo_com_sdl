@@ -10,6 +10,8 @@ Asteroid::Asteroid(int x, int y, int size) {
     this->size = size;
     this->radius = r * size;
 
+    this-> angular_speed = ((rand() % 40) * 0.1) - 2;
+
     this->v_distance_array = new float [this->vertices];
     this->v_angle_array = new float [this->vertices];
     for (int i = 0; i < this->vertices; i++) {
@@ -28,7 +30,7 @@ Asteroid::~Asteroid() {
 // -------------
 
 void Asteroid::rotate() {
-
+    this->angle += this->angular_speed;
 };
 
 void Asteroid::move() {
