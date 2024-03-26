@@ -9,11 +9,12 @@ Asteroid::Asteroid(int x, int y, int size) {
     this->y = y;
     this->size = size;
     this->radius = r * size;
+
     this->v_distance_array = new float [this->vertices];
     this->v_angle_array = new float [this->vertices];
     for (int i = 0; i < this->vertices; i++) {
-        v_distance_array[i] = ((rand() % 50) * 0.1) - 1;
-        v_angle_array[i] = ((rand() % 50) * 0.1) - 1;
+        v_distance_array[i] = ((rand() % 50) * 0.1);
+        v_angle_array[i] = ((rand() % 50) * 0.1);
     }
 };
 
@@ -62,6 +63,7 @@ void Asteroid::draw(SDL_Renderer* renderer) {
         array_y[j] = round(y + points[j][0] * sin(points[j][1] * M_PI / 180));
     }
 
+    // Desenhar
     aapolygonRGBA(renderer, array_x, array_y, this->vertices, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
     if (DEBUGGING) {
