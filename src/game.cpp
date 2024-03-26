@@ -14,9 +14,12 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 void Game::run() {
     int player1_keys [3] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W};
     player1 = new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys);
+
     asteroids.push_back(new Asteroid(50, 50, 4));
     asteroids.push_back(new Asteroid(100, 50, 1));
     asteroids.push_back(new Asteroid(50, 100, 1));
+    asteroids.push_back(new Asteroid(250, 200, 2));
+    asteroids.push_back(new Asteroid(200, 100, 2));
     
     gameLoop();
 }

@@ -11,10 +11,10 @@ private:
     std::unordered_map<std::string, int> keys;  // Teclas de controlos
     Vec2d velocity;                             // Vetor da velocidade
     bool thrusting = false;                     // Representa se está a acelarar ou não
-    int thrust     = 7;                         // Accelaração por segundo
-    int friction   = 1;                         // Fricção por segundo
-    unsigned short int angle = 90;              // Ângulo em graus
-    float angular_speed = 2;                    // Velocidade com que gira em graus por tick 
+    int thrust = 7;                             // Accelaração por segundo
+    float friction = 0.5;                       // Fricção por segundo
+    float angle = 90;                           // Ângulo em graus
+    float angular_speed = 2.5;                  // Velocidade com que gira em graus por tick 
 
     void rotate(const Uint8* keyboard_state);
     void controls(const Uint8* keyboard_state);
