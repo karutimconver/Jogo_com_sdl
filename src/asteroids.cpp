@@ -10,7 +10,12 @@ Asteroid::Asteroid(int x, int y, int size) {
     this->size = size;
     this->radius = r * size;
 
-    this-> angular_speed = ((rand() % 40) * 0.1) - 2;
+    this->speed = (((rand() % 100) * 0.1) - 4) / 2 / size;
+    float x_speed_percentage = (rand() % 100) * 0.01;
+    this->velocity.x = this->speed * x_speed_percentage;
+    this->velocity.y = this->speed - velocity.x;
+
+    this->angular_speed = (((rand() % 30) * 0.1) - 1.5) / size;
 
     this->v_distance_array = new float [this->vertices];
     this->v_angle_array = new float [this->vertices];
@@ -34,7 +39,24 @@ void Asteroid::rotate() {
 };
 
 void Asteroid::move() {
+    this->x += this->velocity.x;
+    this->y += this->velocity.y;
+};
 
+// -----------------
+// | Ecrã infinito |
+// -----------------
+
+void Asteroid::screen_wrap(){
+  if (this->y + this->radius < 0)
+    this->y = SCREEN_HEIGH + this->radius;
+  else if (this->y - this->radius > SCREEN_HEIGH)
+    this->y = 0 - this->radius;
+
+  if (this->x + this->radius < 0)
+    this->x = SCREEN_WIDTH + this->radius;
+  else if (this->x - this->radius > SCREEN_WIDTH)
+    this->x = 0 - this->radius; 
 };
 
 // -----------------
@@ -42,8 +64,9 @@ void Asteroid::move() {
 // -----------------
 
 void Asteroid::update() {
-    this->move();
     this->rotate();
+    this->move();
+    this->screen_wrap();
 };
 
 void Asteroid::draw(SDL_Renderer* renderer) {

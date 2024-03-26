@@ -8,7 +8,9 @@
 
 class Asteroid {
 private:
-    unsigned short int r = 10;       // Raio padrão  
+    unsigned short int r = 10;       // Raio padrão
+    Vec2d velocity;
+    float speed;                     // Velocidade
     float angle = 0;                 // Ângulo em graus
     float angular_speed;             // Velocidade com que gira em graus por tick 
     unsigned short int size;         // Tamanho
@@ -16,6 +18,7 @@ private:
     float* v_distance_array;
     float* v_angle_array;
 
+    void screen_wrap();
     void rotate();
     void move();
 public:
