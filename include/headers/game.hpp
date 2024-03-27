@@ -4,6 +4,7 @@
 #include <SDL/SDL_image.h>
 #include <headers/ship.hpp>
 #include <headers/asteroids.hpp>
+#include <headers/laser.hpp>
 #include <iostream>
 #include <vector>
 
@@ -31,4 +32,5 @@ public:
     Ship* player1 = nullptr;
     Ship* player2 = nullptr;
     std::vector<Asteroid*> asteroids; 
+    std::vector<Laser*> lasers; 
 };

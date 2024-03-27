@@ -13,7 +13,7 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 
 void Game::run() {
     int player1_keys [4] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W, SDL_SCANCODE_SPACE};
-    player1 = new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys);
+    player1 = new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys, &lasers);
 
     asteroids.push_back(new Asteroid(50, 50, 4));
     asteroids.push_back(new Asteroid(100, 50, 1));
@@ -41,6 +41,10 @@ void Game::gameLoop() {
             for (Asteroid* asteroid : asteroids) {
                 asteroid->update();
             }
+
+            for (Laser* laser : lasers) {
+                laser->update();
+            }
         }
 
         Uint64 end = SDL_GetPerformanceCounter();
@@ -54,12 +58,19 @@ void Game::draw() {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
     // Mandar para aqui os desenhos
-
-    player1->draw(_renderer);
     
-    for (Asteroid* asteroid : asteroids) {
-        asteroid->draw(_renderer);
+    if (gameState == GameState::RUNNING) {
+        player1->draw(_renderer);
+        
+        for (Asteroid* asteroid : asteroids) {
+            asteroid->draw(_renderer);
+        }
+
+        for (Laser* laser : lasers) {
+            laser->draw(_renderer);
+        }
     }
+
 
     // Fim dos desenhos
     // A renderizar

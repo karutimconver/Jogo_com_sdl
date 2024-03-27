@@ -6,9 +6,11 @@
 #include <headers/globals.hpp>
 #include <headers/laser.hpp>
 #include <unordered_map>
+#include <vector>
 
 class Ship {
 private:
+    std::vector<Laser*>* laser_array = nullptr; // ponteiro para o array de lasers
     std::unordered_map<std::string, int> keys;  // Teclas de controlos
     Vec2d velocity;                             // Vetor da velocidade
     bool thrusting = false;                     // Representa se está a acelarar ou não
@@ -30,7 +32,7 @@ public:
     int radius = 10;                            // Raio (colisão)
     unsigned short int lives;
 
-    Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4]);
+    Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers);
     ~Ship();
     void update(const Uint8* keybaoard_state);
     void draw(SDL_Renderer* renderer);

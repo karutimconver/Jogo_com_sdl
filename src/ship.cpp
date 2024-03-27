@@ -6,18 +6,21 @@
 // | Construtore e Destruidor |
 // ---------------------------
 
-Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4]) {
-    this->lives = lives;
-    this->x = x;
-    this->y = y;
-    this->keys.insert({"RIGHT", keys[0]});
-    this->keys.insert({"LEFT", keys[1]});
-    this->keys.insert({"UP", keys[2]});
-    this->keys.insert({"SHOT", keys[3]});
+Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers) {
+  this->lives = lives;
+  this->x = x;
+  this->y = y;
+  
+  this->keys.insert({"RIGHT", keys[0]});
+  this->keys.insert({"LEFT", keys[1]});
+  this->keys.insert({"UP", keys[2]});
+  this->keys.insert({"SHOT", keys[3]});
+
+  this->laser_array = lasers;
 };
 
 Ship::~Ship() {
-    
+    laser_array = NULL;
 };
 
 // -------------
