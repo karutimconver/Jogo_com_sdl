@@ -12,7 +12,7 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 };
 
 void Game::run() {
-    int player1_keys [3] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W};
+    int player1_keys [4] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W, SDL_SCANCODE_SPACE};
     player1 = new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys);
 
     asteroids.push_back(new Asteroid(50, 50, 4));

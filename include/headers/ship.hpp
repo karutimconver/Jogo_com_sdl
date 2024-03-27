@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <headers/globals.hpp>
+#include <headers/laser.hpp>
 #include <unordered_map>
 
 class Ship {
@@ -13,8 +14,10 @@ private:
     bool thrusting = false;                     // Representa se está a acelarar ou não
     int thrust = 7;                             // Accelaração por segundo
     float friction = 0.5;                       // Fricção por segundo
-    float angle = 90;                           // Ângulo em graus
+    float angle = 270;                          // Ângulo em graus
     float angular_speed = 2.5;                  // Velocidade com que gira em graus por tick 
+    unsigned short int tip_x;
+    unsigned short int tip_y;
 
     void rotate(const Uint8* keyboard_state);
     void controls(const Uint8* keyboard_state);
@@ -27,7 +30,7 @@ public:
     int radius = 10;                            // Raio (colisão)
     unsigned short int lives;
 
-    Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [3]);
+    Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4]);
     ~Ship();
     void update(const Uint8* keybaoard_state);
     void draw(SDL_Renderer* renderer);
