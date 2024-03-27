@@ -31,13 +31,8 @@ void Laser::move() {
 // | Relógio interno |
 //
 
-void Laser::Count() {
-    this->time_alive += DT;
-
-    if (this->time_alive >= this->max_time) {
-        laser_array->erase(laser_array->begin());
-        delete this;
-    }
+void Laser::count() {
+    
 };
 
 // -----------------
@@ -46,6 +41,7 @@ void Laser::Count() {
 
 void Laser::update() {
     this->move();
+    this->count();
 };
 
 void Laser::draw(SDL_Renderer* renderer) {

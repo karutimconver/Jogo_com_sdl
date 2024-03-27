@@ -15,7 +15,7 @@ private:
     int speed = 50;                             // Rapidez
 
     void move();
-    void Count();
+    void count();
 public:
     float x;
     float y;
