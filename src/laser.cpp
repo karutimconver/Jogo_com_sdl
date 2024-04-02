@@ -4,18 +4,16 @@
 // | Construtor e Destruidor |
 // ---------------------------
 
-Laser::Laser(int x, int y, float angle, std::vector<Laser*>* p) {
+Laser::Laser(int x, int y, float angle) {
     this->x = x;
     this->y = y;
-
-    this->laser_array = p;
-
-    this->velocity.x -= speed * DT * cos(angle * M_PI / 180);
-    this->velocity.y -= speed * DT * sin(angle * M_PI / 180);
+    
+    this->velocity.x += this->speed * DT * cos(angle * M_PI / 180);
+    this->velocity.y += this->speed * DT * sin(angle * M_PI / 180); 
 };
 
 Laser::~Laser() {
-    laser_array = NULL;
+
 };
 
 // -------------
@@ -23,24 +21,41 @@ Laser::~Laser() {
 // -------------
 
 void Laser::move() {
-    this->x += this->velocity.x;
-    this->y += this->velocity.y;
+    this->x += round(this->velocity.x);
+    this->y += round(this->velocity.y);
 };
 
-//
-// | Relógio interno |
-//
+void Laser::screen_wrap() {
+    if (this->y < 0)
+        this->y = SCREEN_HEIGH;
+    else if (this->y > SCREEN_HEIGH)
+        this->y = 0;
+
+    if (this->x < 0)
+        this->x = SCREEN_WIDTH;
+    else if (this->x> SCREEN_WIDTH)
+        this->x = 0; 
+};
+
+// ------------
+// | Contador |
+// ------------
 
 void Laser::count() {
-    
+    this->distance_traveled += this->speed * DT;
+
+    if (this->distance_traveled >= this->max_distance) {
+        this->to_delete = true;
+    }
 };
 
 // -----------------
-// | Ciclo do jogo |
+// | Ciclo de jogo |
 // -----------------
 
 void Laser::update() {
     this->move();
+    this->screen_wrap();
     this->count();
 };
 

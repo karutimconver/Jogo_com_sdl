@@ -6,18 +6,21 @@
 // | Construtore e Destruidor |
 // ---------------------------
 
-Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4]) {
-    this->lives = lives;
-    this->x = x;
-    this->y = y;
-    this->keys.insert({"RIGHT", keys[0]});
-    this->keys.insert({"LEFT", keys[1]});
-    this->keys.insert({"UP", keys[2]});
-    this->keys.insert({"SHOT", keys[3]});
+Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers) {
+  this->lives = lives;
+  this->x = x;
+  this->y = y;
+  
+  this->keys.insert({"RIGHT", keys[0]});
+  this->keys.insert({"LEFT", keys[1]});
+  this->keys.insert({"UP", keys[2]});
+  this->keys.insert({"SHOT", keys[3]});
+
+  this->laser_array = lasers;
 };
 
 Ship::~Ship() {
-    
+    laser_array = NULL;
 };
 
 // -------------
@@ -32,7 +35,7 @@ void Ship::rotate(const Uint8* keyboard_state) {
     this->angle -= angular_speed;
 };
 
-void Ship::controls(const Uint8* keyboard_state, std::vector<Laser*>* lasers) {
+void Ship::controls(const Uint8* keyboard_state) {
   this->rotate(keyboard_state);
 
   if (keyboard_state[keys["UP"]])
@@ -40,11 +43,8 @@ void Ship::controls(const Uint8* keyboard_state, std::vector<Laser*>* lasers) {
   else
     thrusting = false;
 
-  if (keyboard_state[keys["SHOT"]]) {
-    unsigned short int x1 = round(x + 14 * cos((180 + angle) * M_PI / 180));
-    unsigned short int y1 = round(y + 14 * sin((180 + angle) * M_PI / 180));
-    lasers->push_back(new Laser(x1, y1, 180 + angle, lasers));
-  }
+  if (keyboard_state[keys["SHOT"]])
+    laser_array->push_back(new Laser(tip_x, tip_y, angle));
 };
 
 // -------------
@@ -53,8 +53,8 @@ void Ship::controls(const Uint8* keyboard_state, std::vector<Laser*>* lasers) {
 
 void Ship::move() {
   if (thrusting) {
-    velocity.x -= thrust * cos(angle * M_PI / 180);
-    velocity.y -= thrust * sin(angle * M_PI / 180);
+    velocity.x += thrust * cos(angle * M_PI / 180);
+    velocity.y += thrust * sin(angle * M_PI / 180);
   }
 
   apply_friction();
@@ -88,32 +88,32 @@ void Ship::screen_wrap(){
 // | Ciclo do jogo |
 // -----------------
 
-void Ship::update(const Uint8* keyboard_state, std::vector<Laser*>* lasers) {
-  this->controls(keyboard_state, lasers);
+void Ship::update(const Uint8* keyboard_state) {
+  this->controls(keyboard_state);
   this->move();
   this->screen_wrap();
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
     // Coordenadas Polares
-    unsigned short int p1_angle    = (180 + (360 * 100)) + angle;           // ângulo em graus do ponto 1
+    unsigned short int p1_angle    = (360 * 100) + angle;                   // ângulo em graus do ponto 1
     unsigned short int p1_distance = 14;                                    // distancia em graus do ponto 1
-    unsigned short int p2_angle    = 130 + (180 + (360 * 100)) + angle;     // ângulo em graus do ponto 2
+    unsigned short int p2_angle    = 130 + (360 * 100) + angle;             // ângulo em graus do ponto 2
     unsigned short int p2_distance = 13;                                    // distancia em graus do ponto 2
-    unsigned short int p3_angle    = 230 + (180 + (360 * 100)) + angle;     // ângulo em graus do ponto 3
+    unsigned short int p3_angle    = 230 + (360 * 100) + angle;             // ângulo em graus do ponto 3
     unsigned short int p3_distance = 13;                                    // distancia em graus do ponto 3
 
   
     // Coordenadas Cartesianas
     // As funções sin() e cos() recebem um ângulo medido em radianos. A(radianos) = A(graus) * pi / 180; A - ângulo
-    unsigned short int x1 = round(x + p1_distance * cos(p1_angle * M_PI / 180));
-    unsigned short int y1 = round(y + p1_distance * sin(p1_angle * M_PI / 180));
+    tip_x = round(x + p1_distance * cos(p1_angle * M_PI / 180));
+    tip_y = round(y + p1_distance * sin(p1_angle * M_PI / 180));
     unsigned short int x2 = round(x + p2_distance * cos(p2_angle * M_PI / 180));
     unsigned short int y2 = round(y + p2_distance * sin(p2_angle * M_PI / 180));
     unsigned short int x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
     unsigned short int y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
-    unsigned short int val = aatrigonRGBA(renderer, x1, y1, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
+    unsigned short int val = aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
     
     if (DEBUGGING) {
       SDL_RenderDrawPoint(renderer, x, y);
