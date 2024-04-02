@@ -42,6 +42,9 @@ void Ship::controls(const Uint8* keyboard_state) {
     thrusting = true;
   else
     thrusting = false;
+
+  if (keyboard_state[keys["SHOT"]])
+    laser_array->push_back(new Laser(tip_x, tip_y, angle));
 };
 
 // -------------

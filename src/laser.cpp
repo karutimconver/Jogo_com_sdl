@@ -4,12 +4,12 @@
 // | Construtor e Destruidor |
 // ---------------------------
 
-Laser::Laser(int y, int x, float angle) {
+Laser::Laser(int x, int y, float angle) {
     this->x = x;
     this->y = y;
     
-    this->velocity.x += this->speed * cos(angle * M_PI / 180);
-    this->velocity.y += this->speed * sin(angle * M_PI / 180); 
+    this->velocity.x += this->speed * DT * cos(angle * M_PI / 180);
+    this->velocity.y += this->speed * DT * sin(angle * M_PI / 180); 
 };
 
 Laser::~Laser() {
@@ -50,9 +50,10 @@ void Laser::count() {
 // -----------------
 
 void Laser::update() {
-
+    this->move();
+    this->screen_wrap();
 };
 
 void Laser::draw(SDL_Renderer* renderer) {
-
+    aacircleRGBA(renderer, x, y, 0, 255, 255, 255, SDL_ALPHA_OPAQUE);
 };
