@@ -9,10 +9,10 @@
 
 class Laser {
 private:
-    int speed = 500;         // Rapidez de movimento em unidades por segundo
-    Vec2d velocity;          // Vetor da velocidade
-    float max_distance;      // Distância máxima
-    float distance_traveled; // distância percorrida
+    int speed = 500;            // Rapidez de movimento em unidades por segundo
+    Vec2d velocity;             // Vetor da velocidade
+    float max_distance = 1000;  // Distância máxima
+    float distance_traveled=0;// distância percorrida
 
     void move();
     void screen_wrap();

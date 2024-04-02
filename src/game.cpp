@@ -44,6 +44,11 @@ void Game::gameLoop() {
 
             for (Laser* laser : lasers) {
                 laser->update();
+                
+                if (laser->to_delete) {
+                    lasers.pop_back();
+                    //delete laser;
+                }
             }
         }
 

@@ -42,7 +42,11 @@ void Laser::screen_wrap() {
 // ------------
 
 void Laser::count() {
+    this->distance_traveled += this->speed * DT;
 
+    if (this->distance_traveled >= this->max_distance) {
+        this->to_delete = true;
+    }
 };
 
 // -----------------
@@ -52,6 +56,7 @@ void Laser::count() {
 void Laser::update() {
     this->move();
     this->screen_wrap();
+    this->count();
 };
 
 void Laser::draw(SDL_Renderer* renderer) {
