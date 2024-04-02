@@ -3,8 +3,11 @@
 #include <SDL/SDL2_gfxPrimitives.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-#include <iostream>
 #include <headers/globals.hpp>
+#include <headers/ship.hpp>
+#include <headers/laser.hpp>
+#include <iostream>
+#include <vector>
 
 class Asteroid {
 private:
@@ -19,6 +22,7 @@ private:
     float* v_angle_array;
 
     void screen_wrap();
+    //void collide();
     void rotate();
     void move();
 public:

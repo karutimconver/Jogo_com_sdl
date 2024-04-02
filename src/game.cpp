@@ -13,7 +13,7 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 
 void Game::run() {
     int player1_keys [4] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W, SDL_SCANCODE_SPACE};
-    player1 = new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys, &lasers);
+    ships.push_back(new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys, &lasers));
 
     asteroids.push_back(new Asteroid(50, 50, 4));
     asteroids.push_back(new Asteroid(100, 50, 1));
@@ -38,7 +38,9 @@ void Game::gameLoop() {
             
             const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
             
-            player1->update(keyboard_state);
+            for (Ship* player : ships) {
+                player->update(keyboard_state);
+            }
 
             for (Asteroid* asteroid : asteroids) {
                 asteroid->update();
@@ -50,7 +52,6 @@ void Game::gameLoop() {
             for (Laser* laser : lasers) {
                 laser->update();
             }
-            
             // remover
             if (lasers.size() > 0) {
                 auto laser_remove = std::remove_if(lasers.begin(), lasers.end(), [&] (Laser* laser) {return laser->to_delete;});
@@ -72,7 +73,10 @@ void Game::draw() {
     // Mandar para aqui os desenhos
     
     if (gameState == GameState::RUNNING) {
-        player1->draw(_renderer);
+        
+        for (Ship* player : ships) {
+            player->draw(_renderer);
+        }
         
         for (Asteroid* asteroid : asteroids) {
             asteroid->draw(_renderer);

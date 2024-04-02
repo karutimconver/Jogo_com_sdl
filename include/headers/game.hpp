@@ -30,8 +30,7 @@ public:
     void run();
     void draw();
 
-    Ship* player1 = nullptr;
-    Ship* player2 = nullptr;
+    std::vector<Ship*> ships;
     std::vector<Asteroid*> asteroids; 
     std::vector<Laser*> lasers; 
 };
