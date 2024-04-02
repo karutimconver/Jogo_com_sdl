@@ -63,7 +63,7 @@ void Game::gameLoop() {
         Uint64 end = SDL_GetPerformanceCounter();
         dt = (end - start) / SDL_GetPerformanceFrequency();
         draw();
-        SDL_Delay(1000/120-dt);
+        SDL_Delay(DT*1000-dt);
     }
 }
 

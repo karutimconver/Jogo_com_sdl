@@ -10,7 +10,7 @@
 
 class Ship {
 private:
-    std::vector<Laser*>* laser_array = nullptr; // ponteiro para o array de lasers
+    std::vector<Laser*>* laser_array = nullptr; // Ponteiro para o array de lasers
     std::unordered_map<std::string, int> keys;  // Teclas de controlos
     Vec2d velocity;                             // Vetor da velocidade
     bool thrusting = false;                     // Representa se está a acelarar ou não
@@ -18,14 +18,17 @@ private:
     float friction = 0.5;                       // Fricção por segundo
     float angle = 270;                          // Ângulo em graus
     float angular_speed = 2.5;                  // Velocidade com que gira em graus por tick 
+    float shot_timer = 0;                       // Tempo desdo último disparo
+    double cooldown = 20 * DT;                   // Tempo de recarga em Ticks
+    
     unsigned short int tip_x;
     unsigned short int tip_y;
 
     void rotate(const Uint8* keyboard_state);
     void controls(const Uint8* keyboard_state);
-    void move();
     void apply_friction();
     void screen_wrap();
+    void move();
 public:
     float x;
     float y;

@@ -65,7 +65,7 @@ void Asteroid::screen_wrap(){
 // | Colisão |
 // -----------
 
-// void collide() {
+//void collide() {
 
 //};
 

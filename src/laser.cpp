@@ -7,7 +7,7 @@
 Laser::Laser(int x, int y, float angle) {
     this->x = x;
     this->y = y;
-    
+
     this->velocity.x += this->speed * DT * cos(angle * M_PI / 180);
     this->velocity.y += this->speed * DT * sin(angle * M_PI / 180); 
 };

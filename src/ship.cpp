@@ -36,6 +36,7 @@ void Ship::rotate(const Uint8* keyboard_state) {
 };
 
 void Ship::controls(const Uint8* keyboard_state) {
+  // Movimento
   this->rotate(keyboard_state);
 
   if (keyboard_state[keys["UP"]])
@@ -43,8 +44,14 @@ void Ship::controls(const Uint8* keyboard_state) {
   else
     thrusting = false;
 
-  if (keyboard_state[keys["SHOT"]])
-    laser_array->push_back(new Laser(tip_x, tip_y, angle));
+  // Tiros
+  if (keyboard_state[keys["SHOT"]]) {
+    if (this->shot_timer >= this->cooldown) {
+      laser_array->push_back(new Laser(tip_x, tip_y, angle));
+      this->shot_timer = 0;
+    }
+  }
+  this->shot_timer += DT;
 };
 
 // -------------
@@ -114,7 +121,7 @@ void Ship::draw(SDL_Renderer* renderer) {
     unsigned short int y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
     unsigned short int val = aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
-    
+
     if (DEBUGGING) {
       SDL_RenderDrawPoint(renderer, x, y);
       aacircleRGBA(renderer, x, y, radius, 255, 120, 120, SDL_ALPHA_OPAQUE);
