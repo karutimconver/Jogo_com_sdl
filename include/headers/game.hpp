@@ -5,6 +5,7 @@
 #include <headers/ship.hpp>
 #include <headers/asteroids.hpp>
 #include <headers/laser.hpp>
+#include <algorithm>
 #include <iostream>
 #include <vector>
 

@@ -21,8 +21,8 @@ Laser::~Laser() {
 // -------------
 
 void Laser::move() {
-    this->x += this->velocity.x;
-    this->y += this->velocity.y;
+    this->x += round(this->velocity.x);
+    this->y += round(this->velocity.y);
 };
 
 void Laser::screen_wrap() {

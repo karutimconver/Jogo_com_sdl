@@ -35,20 +35,27 @@ void Game::gameLoop() {
         handleEvents();
         
         if (gameState == GameState::RUNNING) {
+            
             const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
+            
             player1->update(keyboard_state);
 
             for (Asteroid* asteroid : asteroids) {
                 asteroid->update();
             }
 
+
+            // Lasers
+            // atualizar
             for (Laser* laser : lasers) {
                 laser->update();
-                
-                if (laser->to_delete) {
-                    lasers.pop_back();
-                    //delete laser;
-                }
+            }
+            
+            // remover
+            if (lasers.size() > 0) {
+                auto laser_remove = std::remove_if(lasers.begin(), lasers.end(), [&] (Laser* laser) {return laser->to_delete;});
+                if (laser_remove != lasers.end()) 
+                    lasers.erase(laser_remove);
             }
         }
 
