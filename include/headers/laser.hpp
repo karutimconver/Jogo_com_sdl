@@ -26,4 +26,4 @@ public:
     ~Laser();
     void update();
     void draw(SDL_Renderer* renderer);
-};
+};no bug

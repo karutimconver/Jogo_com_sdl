@@ -55,8 +55,9 @@ void Game::gameLoop() {
             // remover
             if (lasers.size() > 0) {
                 auto laser_remove = std::remove_if(lasers.begin(), lasers.end(), [&] (Laser* laser) {return laser->to_delete;});
-                if (laser_remove != lasers.end()) 
+                if (laser_remove != lasers.end()) {
                     lasers.erase(laser_remove);
+                }
             }
         }
 
