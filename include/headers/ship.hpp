@@ -19,7 +19,7 @@ private:
     float angle = 270;                          // Ângulo em graus
     float angular_speed = 2.5;                  // Velocidade com que gira em graus por tick 
     float shot_timer = 0;                       // Tempo desdo último disparo
-    double cooldown = 20 * DT;                   // Tempo de recarga em Ticks
+    double cooldown = 20 * DT;                  // Tempo de recarga em Ticks
     
     unsigned short int tip_x;
     unsigned short int tip_y;
