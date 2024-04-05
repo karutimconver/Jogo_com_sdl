@@ -4,8 +4,8 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <headers/globals.hpp>
-#include <headers/ship.hpp>
 #include <headers/laser.hpp>
+#include <headers/ship.hpp>
 #include <iostream>
 #include <vector>
 
@@ -22,7 +22,7 @@ private:
     float* v_angle_array;
 
     void screen_wrap();
-    //void collide();
+    void collide(std::vector<Laser*>* lasers, std::vector<Ship*>* players);
     void rotate();
     void move();
 public:
@@ -32,6 +32,6 @@ public:
 
     Asteroid(int x, int y, int size);
     ~Asteroid();
-    void update();
+    void update(std::vector<Laser*>* lasers, std::vector<Ship*>* players);
     void draw(SDL_Renderer* renderer);
 };

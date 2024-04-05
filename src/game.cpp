@@ -12,14 +12,17 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 };
 
 void Game::run() {
+    int distance_from_the_center = 200;    // distancia da nave ao centro da tela
     int player1_keys [4] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W, SDL_SCANCODE_SPACE};
-    ships.push_back(new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys, &lasers));
+    int player2_keys [4] = {SDL_SCANCODE_RIGHT, SDL_SCANCODE_LEFT, SDL_SCANCODE_UP, SDL_SCANCODE_RCTRL};
+    ships.push_back(new Ship(3, SCREEN_WIDTH / 2 + distance_from_the_center, SCREEN_HEIGH / 2, player1_keys, &lasers));
+    //ships.push_back(new Ship(3, SCREEN_WIDTH / 2 - distance_from_the_center, SCREEN_HEIGH / 2, player2_keys, &lasers));
 
     asteroids.push_back(new Asteroid(50, 50, 4));
-    asteroids.push_back(new Asteroid(100, 50, 1));
-    asteroids.push_back(new Asteroid(50, 100, 1));
-    asteroids.push_back(new Asteroid(250, 200, 2));
-    asteroids.push_back(new Asteroid(200, 100, 2));
+    //asteroids.push_back(new Asteroid(100, 50, 1));
+    //asteroids.push_back(new Asteroid(50, 100, 1));
+    //asteroids.push_back(new Asteroid(250, 200, 2));
+    //asteroids.push_back(new Asteroid(200, 100, 2));
     
     gameLoop();
 }
@@ -43,7 +46,7 @@ void Game::gameLoop() {
             }
 
             for (Asteroid* asteroid : asteroids) {
-                asteroid->update();
+                asteroid->update(&lasers, &ships);
             }
 
 
@@ -72,7 +75,7 @@ void Game::draw() {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
     // Mandar para aqui os desenhos
-    
+
     if (gameState == GameState::RUNNING) {
         
         for (Ship* player : ships) {
@@ -87,7 +90,6 @@ void Game::draw() {
             laser->draw(_renderer);
         }
     }
-
 
     // Fim dos desenhos
     // A renderizar

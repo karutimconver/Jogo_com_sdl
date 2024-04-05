@@ -65,19 +65,28 @@ void Asteroid::screen_wrap(){
 // | Colisão |
 // -----------
 
-//void collide() {
-
-//};
+void Asteroid::collide(std::vector<Laser*>* lasers, std::vector<Ship*>* players) {
+  for (Laser *laser : *lasers) {
+    if (this->radius > calculate_distance(laser->x, laser->y, this->x, this->y)) {
+      std::cout << "laser collision detected\n";
+    }
+  }
+  for (Ship *ship : *players) {
+    if (this->radius + ship->radius > calculate_distance(ship->x, ship->y, this->x, this->y)) {
+      std::cout << "ship collision detected\n";
+    }
+  }
+};
 
 // -----------------
 // | Ciclo do jogo |
 // -----------------
 
-void Asteroid::update() {
+void Asteroid::update(std::vector<Laser*>* lasers, std::vector<Ship*>* players) {
   this->rotate();
   this->move();
   this->screen_wrap();
-  //this->collide();
+  this->collide(lasers, players);
 };
 
 void Asteroid::draw(SDL_Renderer* renderer) {
