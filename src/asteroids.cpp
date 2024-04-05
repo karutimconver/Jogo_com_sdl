@@ -69,11 +69,15 @@ void Asteroid::collide(std::vector<Laser*>* lasers, std::vector<Ship*>* players)
   for (Laser *laser : *lasers) {
     if (this->radius > calculate_distance(laser->x, laser->y, this->x, this->y)) {
       std::cout << "laser collision detected\n";
+      laser->to_delete = true;
+      this->hit = true;
     }
   }
+
   for (Ship *ship : *players) {
     if (this->radius + ship->radius > calculate_distance(ship->x, ship->y, this->x, this->y)) {
       std::cout << "ship collision detected\n";
+      this->hit = true;
     }
   }
 };
@@ -112,7 +116,7 @@ void Asteroid::draw(SDL_Renderer* renderer) {
   aapolygonRGBA(renderer, array_x, array_y, this->vertices, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
   if (DEBUGGING) {
-    SDL_RenderDrawPoint(renderer, x, y);
+    aacircleRGBA(renderer, x, y, 0, 255, 120, 120, SDL_ALPHA_OPAQUE);
     aacircleRGBA(renderer, x, y, radius, 255, 120, 120, SDL_ALPHA_OPAQUE);
   }
 };

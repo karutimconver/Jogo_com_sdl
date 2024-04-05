@@ -123,7 +123,7 @@ void Ship::draw(SDL_Renderer* renderer) {
     unsigned short int val = aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
     if (DEBUGGING) {
-      SDL_RenderDrawPoint(renderer, x, y);
-      aacircleRGBA(renderer, x, y, radius, 255, 120, 120, SDL_ALPHA_OPAQUE);
+      aacircleRGBA(renderer, x, y, 0, 120, 255, 120, SDL_ALPHA_OPAQUE);
+      aacircleRGBA(renderer, x, y, radius, 120, 255, 120, SDL_ALPHA_OPAQUE);
     }
 };

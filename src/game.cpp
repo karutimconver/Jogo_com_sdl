@@ -45,8 +45,24 @@ void Game::gameLoop() {
                 player->update(keyboard_state);
             }
 
+
+            // Asteroides
+            // Atualizar
             for (Asteroid* asteroid : asteroids) {
                 asteroid->update(&lasers, &ships);
+
+                if (asteroid->size > 1 && asteroid->hit) {     
+                    asteroids.push_back(new Asteroid(asteroid->x, asteroid->y, asteroid->size/2));
+                    asteroids.push_back(new Asteroid(asteroid->x, asteroid->y, asteroid->size/2));              
+                }
+            }
+
+            // Destruir
+            if (asteroids.size() > 0) {
+                auto asteroid_remove = std::remove_if(asteroids.begin(), asteroids.end(), [&] (Asteroid* asteroid) {return asteroid->hit;});
+                if (asteroid_remove != asteroids.end()) {
+                    asteroids.erase(asteroid_remove);                    
+                }
             }
 
 
