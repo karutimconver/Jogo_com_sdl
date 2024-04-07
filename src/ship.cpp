@@ -6,11 +6,12 @@
 // | Construtore e Destruidor |
 // ---------------------------
 
-Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers) {
+Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers, unsigned short int n) {
   this->lives = lives;
   this->x = x;
   this->y = y;
-  
+  this->n = n;
+
   this->keys.insert({"RIGHT", keys[0]});
   this->keys.insert({"LEFT", keys[1]});
   this->keys.insert({"UP", keys[2]});
@@ -122,8 +123,15 @@ void Ship::draw(SDL_Renderer* renderer) {
 
     unsigned short int val = aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
+    switch (this->n) {
+      case 1:
+        aacircleRGBA(renderer, x, y, 0, 37, 250, 243, SDL_ALPHA_OPAQUE);
+        break;
+      case 2:
+        aacircleRGBA(renderer, x, y, 0, 255, 120, 120, SDL_ALPHA_OPAQUE);
+        break;
+    } 
     if (DEBUGGING) {
-      aacircleRGBA(renderer, x, y, 0, 120, 255, 120, SDL_ALPHA_OPAQUE);
       aacircleRGBA(renderer, x, y, radius, 120, 255, 120, SDL_ALPHA_OPAQUE);
     }
 };

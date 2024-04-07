@@ -13,7 +13,6 @@ enum class GameState {RUNNING, EXIT};
 
 class Game {
 private:
-    
     void gameLoop();
     void handleEvents();
 

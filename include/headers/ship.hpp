@@ -11,7 +11,6 @@
 class Ship {
 private:
     std::vector<Laser*>* laser_array = nullptr; // Ponteiro para o array de lasers
-    std::unordered_map<std::string, int> keys;  // Teclas de controlos
     Vec2d velocity;                             // Vetor da velocidade
     bool thrusting = false;                     // Representa se está a acelarar ou não
     int thrust = 7;                             // Accelaração por segundo
@@ -25,17 +24,20 @@ private:
     unsigned short int tip_y;
 
     void rotate(const Uint8* keyboard_state);
-    void controls(const Uint8* keyboard_state);
+    void controls(const Uint8* keyboard_state); 
     void apply_friction();
     void screen_wrap();
     void move();
 public:
+    unsigned short int n;                       // número da nave
     float x;
     float y;
+    bool hit = false;                           // Se foi ou não atingido
     int radius = 10;                            // Raio (colisão)
+    std::unordered_map<std::string, int> keys;  // Teclas de controlos
     unsigned short int lives;
 
-    Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers);
+    Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers, unsigned short int n);
     ~Ship();
     void update(const Uint8* keyboard_state);
     void draw(SDL_Renderer* renderer);

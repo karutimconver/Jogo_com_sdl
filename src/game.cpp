@@ -15,14 +15,14 @@ void Game::run() {
     int distance_from_the_center = 200;    // distancia da nave ao centro da tela
     int player1_keys [4] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W, SDL_SCANCODE_SPACE};
     int player2_keys [4] = {SDL_SCANCODE_RIGHT, SDL_SCANCODE_LEFT, SDL_SCANCODE_UP, SDL_SCANCODE_RCTRL};
-    ships.push_back(new Ship(3, SCREEN_WIDTH / 2 + distance_from_the_center, SCREEN_HEIGH / 2, player1_keys, &lasers));
-    //ships.push_back(new Ship(3, SCREEN_WIDTH / 2 - distance_from_the_center, SCREEN_HEIGH / 2, player2_keys, &lasers));
+    ships.push_back(new Ship(3, SCREEN_WIDTH / 2 + distance_from_the_center, SCREEN_HEIGH / 2, player1_keys, &lasers, 1));
+    ships.push_back(new Ship(3, SCREEN_WIDTH / 2 - distance_from_the_center, SCREEN_HEIGH / 2, player2_keys, &lasers, 2));
 
     asteroids.push_back(new Asteroid(50, 50, 4));
-    //asteroids.push_back(new Asteroid(100, 50, 1));
-    //asteroids.push_back(new Asteroid(50, 100, 1));
-    //asteroids.push_back(new Asteroid(250, 200, 2));
-    //asteroids.push_back(new Asteroid(200, 100, 2));
+    asteroids.push_back(new Asteroid(100, 50, 1));
+    asteroids.push_back(new Asteroid(50, 100, 1));
+    asteroids.push_back(new Asteroid(250, 200, 2));
+    asteroids.push_back(new Asteroid(200, 100, 2));
     
     gameLoop();
 }
@@ -41,10 +41,24 @@ void Game::gameLoop() {
             
             const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
             
+            // jogadores
             for (Ship* player : ships) {
                 player->update(keyboard_state);
+                if (player->hit) {
+                    if (player->lives > 1) {
+                        int keys[4] = {player->keys["RIGHT"], player->keys["LEFT"], player->keys["UP"], player->keys["SHOT"]};
+                        std::replace(ships.begin(), ships.end(), player, new Ship(player->lives-1, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, keys, &lasers, player->n));
+                    }
+                    else {
+                        auto ships_remove = std::remove_if(ships.begin(), ships.end(), [&] (Ship* player) {return player->hit;});
+                        if (ships_remove != ships.end()) {
+                            ships.erase(ships_remove);
+                        }
+                    }
+                }
+                std::cout << "\nplayer " << player->n << " lives: " << player->lives;
             }
-
+            std::cout << "\n";
 
             // Asteroides
             // Atualizar
@@ -56,7 +70,6 @@ void Game::gameLoop() {
                     asteroids.push_back(new Asteroid(asteroid->x, asteroid->y, asteroid->size/2));              
                 }
             }
-
             // Destruir
             if (asteroids.size() > 0) {
                 auto asteroid_remove = std::remove_if(asteroids.begin(), asteroids.end(), [&] (Asteroid* asteroid) {return asteroid->hit;});
@@ -65,13 +78,12 @@ void Game::gameLoop() {
                 }
             }
 
-
             // Lasers
-            // atualizar
+            // Atualizar
             for (Laser* laser : lasers) {
                 laser->update();
             }
-            // remover
+            // Remover
             if (lasers.size() > 0) {
                 auto laser_remove = std::remove_if(lasers.begin(), lasers.end(), [&] (Laser* laser) {return laser->to_delete;});
                 if (laser_remove != lasers.end()) {
@@ -81,8 +93,8 @@ void Game::gameLoop() {
         }
 
         Uint64 end = SDL_GetPerformanceCounter();
-        dt = (end - start) / SDL_GetPerformanceFrequency();
         draw();
+        dt = (end - start) / SDL_GetPerformanceFrequency();
         SDL_Delay(DT*1000-dt);
     }
 }
@@ -93,7 +105,6 @@ void Game::draw() {
     // Mandar para aqui os desenhos
 
     if (gameState == GameState::RUNNING) {
-        
         for (Ship* player : ships) {
             player->draw(_renderer);
         }
