@@ -56,9 +56,7 @@ void Game::gameLoop() {
                         }
                     }
                 }
-                std::cout << "\nplayer " << player->n << " lives: " << player->lives;
             }
-            std::cout << "\n";
 
             // Asteroides
             // Atualizar

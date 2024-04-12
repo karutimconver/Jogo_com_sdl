@@ -1,2 +1,2 @@
 all:
-	g++ -Iinclude -Iinclude/SDL -Iinclude/headers -Llib -o bin/asteroids src/*.cpp -lmingw32 -lSDL2main -lSDL2_gfx -lSDL2 -lSDL2_image
+	g++ -Iinclude -Iinclude/SDL -Iinclude/headers -Llib -o bin/asteroids src/*.cpp -lmingw32 -lSDL2main -lSDL2_ttf -lSDL2_gfx -lSDL2 -lSDL2_image
