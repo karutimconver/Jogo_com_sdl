@@ -68,16 +68,17 @@ void Asteroid::screen_wrap(){
 void Asteroid::collide(std::vector<Laser*>* lasers, std::vector<Ship*>* players) {
   for (Laser *laser : *lasers) {
     if (this->radius > calculate_distance(laser->x, laser->y, this->x, this->y)) {
-      std::cout << "laser collision detected\n";
       laser->to_delete = true;
       this->hit = true;
     }
   }
 
-  for (Ship *ship : *players) {
-    if (this->radius + ship->radius > calculate_distance(ship->x, ship->y, this->x, this->y)) {
-      std::cout << "ship collision detected\n";
-      this->hit = true;
+  for (Ship *player : *players) {
+    if (this->radius + player->radius > calculate_distance(player->x, player->y, this->x, this->y)) {
+      if (!player->invincible) {
+        this->hit = true;
+        player->hit = true;
+      }
     }
   }
 };

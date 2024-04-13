@@ -1,16 +1,15 @@
 #include <headers/ship.hpp>
-#include <headers/globals.hpp>
-#include <iostream>
 
 // ---------------------------
 // | Construtore e Destruidor |
 // ---------------------------
 
-Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers) {
+Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers, unsigned short int n) {
   this->lives = lives;
   this->x = x;
   this->y = y;
-  
+  this->n = n;
+
   this->keys.insert({"RIGHT", keys[0]});
   this->keys.insert({"LEFT", keys[1]});
   this->keys.insert({"UP", keys[2]});
@@ -99,9 +98,28 @@ void Ship::update(const Uint8* keyboard_state) {
   this->controls(keyboard_state);
   this->move();
   this->screen_wrap();
+
+  if (this->invincible) {
+    this->invincible_timer -= DT;
+    if (this->invincible_timer <= 0)
+      this->invincible = false;
+  }
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
+    if (name == nullptr) {
+        switch (this->n) {
+        case 1:
+          
+          name = new Text("O Melhor", x, y, 8, renderer);
+          break;
+        case 2:
+          
+          name = new Text("A Programadora", x, y, 8, renderer);
+          break;
+      } 
+    }
+
     // Coordenadas Polares
     unsigned short int p1_angle    = (360 * 100) + angle;                   // ângulo em graus do ponto 1
     unsigned short int p1_distance = 14;                                    // distancia em graus do ponto 1
@@ -109,7 +127,6 @@ void Ship::draw(SDL_Renderer* renderer) {
     unsigned short int p2_distance = 13;                                    // distancia em graus do ponto 2
     unsigned short int p3_angle    = 230 + (360 * 100) + angle;             // ângulo em graus do ponto 3
     unsigned short int p3_distance = 13;                                    // distancia em graus do ponto 3
-
   
     // Coordenadas Cartesianas
     // As funções sin() e cos() recebem um ângulo medido em radianos. A(radianos) = A(graus) * pi / 180; A - ângulo
@@ -120,10 +137,18 @@ void Ship::draw(SDL_Renderer* renderer) {
     unsigned short int x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
     unsigned short int y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
-    unsigned short int val = aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
-
+    if (!invincible) {
+      aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
+    }
+    else {
+      aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, 120);
+    }
+    
+    name->x = this->x;
+    name->y = this->y + 24;
+    name->draw(renderer);
+    
     if (DEBUGGING) {
-      aacircleRGBA(renderer, x, y, 0, 120, 255, 120, SDL_ALPHA_OPAQUE);
       aacircleRGBA(renderer, x, y, radius, 120, 255, 120, SDL_ALPHA_OPAQUE);
     }
 };

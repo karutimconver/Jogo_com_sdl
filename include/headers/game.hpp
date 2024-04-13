@@ -1,27 +1,29 @@
 #pragma once
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <headers/ship.hpp>
 #include <headers/asteroids.hpp>
 #include <headers/laser.hpp>
+#include <headers/text.hpp>
 #include <algorithm>
 #include <iostream>
 #include <vector>
 
-enum class GameState {RUNNING, EXIT};
+enum class GameState {RUNNING, EXIT, MENU};
 
 class Game {
 private:
-    
     void gameLoop();
     void handleEvents();
 
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
 
-    long double dt;
+    unsigned short int level = 1;
 
+    long double dt;
 public:
     GameState gameState = GameState::RUNNING;
 
