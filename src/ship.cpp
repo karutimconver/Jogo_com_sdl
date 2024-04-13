@@ -102,8 +102,18 @@ void Ship::update(const Uint8* keyboard_state) {
 
 void Ship::draw(SDL_Renderer* renderer) {
     if (name == nullptr) {
-      //name = new Text("p", x, y - 15, 8, renderer);
+        switch (this->n) {
+        case 1:
+          
+          name = new Text("p1", x, y, 8, renderer);
+          break;
+        case 2:
+          
+          name = new Text("p2", x, y, 8, renderer);
+          break;
+      } 
     }
+
     // Coordenadas Polares
     unsigned short int p1_angle    = (360 * 100) + angle;                   // ângulo em graus do ponto 1
     unsigned short int p1_distance = 14;                                    // distancia em graus do ponto 1
@@ -123,15 +133,11 @@ void Ship::draw(SDL_Renderer* renderer) {
     unsigned short int y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
     unsigned short int val = aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
-
-    switch (this->n) {
-      case 1:
-        aacircleRGBA(renderer, x, y, 0, 37, 250, 243, SDL_ALPHA_OPAQUE);
-        break;
-      case 2:
-        aacircleRGBA(renderer, x, y, 0, 255, 120, 120, SDL_ALPHA_OPAQUE);
-        break;
-    } 
+    
+    name->x = this->x;
+    name->y = this->y + 24;
+    name->draw(renderer);
+    
     if (DEBUGGING) {
       aacircleRGBA(renderer, x, y, radius, 120, 255, 120, SDL_ALPHA_OPAQUE);
     }

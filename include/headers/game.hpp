@@ -11,7 +11,7 @@
 #include <iostream>
 #include <vector>
 
-enum class GameState {RUNNING, EXIT};
+enum class GameState {RUNNING, EXIT, MENU};
 
 class Game {
 private:

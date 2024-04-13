@@ -26,7 +26,6 @@ void Game::run() {
     asteroids.push_back(new Asteroid(250, 200, 2));
     asteroids.push_back(new Asteroid(200, 100, 2));
 
-    
     gameLoop();
 }
 
@@ -105,7 +104,8 @@ void Game::draw() {
     SDL_RenderClear(_renderer);
     // Mandar para aqui os desenhos
 
-    if (gameState == GameState::RUNNING) {
+    switch (gameState) {
+    case GameState::RUNNING:
         for (Ship* player : ships) {
             player->draw(_renderer);
         }
@@ -117,6 +117,8 @@ void Game::draw() {
         for (Laser* laser : lasers) {
             laser->draw(_renderer);
         }
+
+        break;
     }
 
 

@@ -30,8 +30,8 @@ Text::~Text() {
 // -----------
 
 void Text::draw(SDL_Renderer* renderer) {
-    rectangle.x = round(this->x);
-    rectangle.y = round(this->y);
+    rectangle.x = round(this->x - (rectangle.w / 2));
+    rectangle.y = round(this->y - (rectangle.h / 2));
 
     SDL_RenderCopy(renderer, this->texture, NULL, &this->rectangle);
 }
