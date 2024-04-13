@@ -98,6 +98,12 @@ void Ship::update(const Uint8* keyboard_state) {
   this->controls(keyboard_state);
   this->move();
   this->screen_wrap();
+
+  if (this->invincible) {
+    this->invincible_timer -= DT;
+    if (this->invincible_timer <= 0)
+      this->invincible = false;
+  }
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
@@ -105,11 +111,11 @@ void Ship::draw(SDL_Renderer* renderer) {
         switch (this->n) {
         case 1:
           
-          name = new Text("p1", x, y, 8, renderer);
+          name = new Text("O Melhor", x, y, 8, renderer);
           break;
         case 2:
           
-          name = new Text("p2", x, y, 8, renderer);
+          name = new Text("A Programadora", x, y, 8, renderer);
           break;
       } 
     }
@@ -121,7 +127,6 @@ void Ship::draw(SDL_Renderer* renderer) {
     unsigned short int p2_distance = 13;                                    // distancia em graus do ponto 2
     unsigned short int p3_angle    = 230 + (360 * 100) + angle;             // ângulo em graus do ponto 3
     unsigned short int p3_distance = 13;                                    // distancia em graus do ponto 3
-
   
     // Coordenadas Cartesianas
     // As funções sin() e cos() recebem um ângulo medido em radianos. A(radianos) = A(graus) * pi / 180; A - ângulo
@@ -132,7 +137,12 @@ void Ship::draw(SDL_Renderer* renderer) {
     unsigned short int x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
     unsigned short int y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
-    unsigned short int val = aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
+    if (!invincible) {
+      aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
+    }
+    else {
+      aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, 120);
+    }
     
     name->x = this->x;
     name->y = this->y + 24;

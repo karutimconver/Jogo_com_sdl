@@ -75,8 +75,10 @@ void Asteroid::collide(std::vector<Laser*>* lasers, std::vector<Ship*>* players)
 
   for (Ship *player : *players) {
     if (this->radius + player->radius > calculate_distance(player->x, player->y, this->x, this->y)) {
-      this->hit = true;
-      player->hit = true;
+      if (!player->invincible) {
+        this->hit = true;
+        player->hit = true;
+      }
     }
   }
 };

@@ -20,7 +20,8 @@ private:
     float angle = 270;                          // Ângulo em graus
     float angular_speed = 2.5;                  // Velocidade com que gira em graus por tick 
     float shot_timer = 0;                       // Tempo desdo último disparo
-    double cooldown = 20 * DT;                  // Tempo de recarga em Ticks
+    double cooldown = 30 * DT;                  // Tempo de recarga em Ticks
+    float invincible_timer = 2;                 // Cronômetro de invencibilidade
     Text* name = nullptr;                       // Nome da nave
 
     unsigned short int tip_x;
@@ -32,6 +33,7 @@ private:
     void screen_wrap();
     void move();
 public:
+    bool invincible = true;                     // Se está ou não invencivel
     unsigned short int n;                       // número da nave
     float x;
     float y;

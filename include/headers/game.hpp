@@ -21,6 +21,8 @@ private:
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
 
+    unsigned short int level = 1;
+
     long double dt;
 public:
     GameState gameState = GameState::RUNNING;

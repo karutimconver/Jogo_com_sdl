@@ -21,10 +21,10 @@ void Game::run() {
     ships.push_back(new Ship(3, SCREEN_WIDTH / 2 - distance_from_the_center, SCREEN_HEIGH / 2, player2_keys, &lasers, 2));
 
     asteroids.push_back(new Asteroid(50, 50, 4));
-    asteroids.push_back(new Asteroid(100, 50, 1));
-    asteroids.push_back(new Asteroid(50, 100, 1));
-    asteroids.push_back(new Asteroid(250, 200, 2));
-    asteroids.push_back(new Asteroid(200, 100, 2));
+    asteroids.push_back(new Asteroid(100, 50, 4));
+    asteroids.push_back(new Asteroid(50, 100, 4));
+    asteroids.push_back(new Asteroid(250, 200, 4));
+    asteroids.push_back(new Asteroid(200, 100, 4));
 
     gameLoop();
 }
@@ -65,9 +65,10 @@ void Game::gameLoop() {
             for (Asteroid* asteroid : asteroids) {
                 asteroid->update(&lasers, &ships);
 
+                // Criar novos asteroides
                 if (asteroid->size > 1 && asteroid->hit) {     
                     asteroids.push_back(new Asteroid(asteroid->x, asteroid->y, asteroid->size/2));
-                    asteroids.push_back(new Asteroid(asteroid->x, asteroid->y, asteroid->size/2));              
+                    asteroids.push_back(new Asteroid(asteroid->x, asteroid->y, asteroid->size/2));                           
                 }
             }
             // Destruir
@@ -90,6 +91,8 @@ void Game::gameLoop() {
                     lasers.erase(laser_remove);
                 }
             }
+
+            //if (asteroids.len()){}
         }
 
         Uint64 end = SDL_GetPerformanceCounter();
