@@ -1,6 +1,4 @@
 #include <headers/ship.hpp>
-#include <headers/globals.hpp>
-#include <iostream>
 
 // ---------------------------
 // | Construtore e Destruidor |
@@ -103,6 +101,9 @@ void Ship::update(const Uint8* keyboard_state) {
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
+    if (name == nullptr) {
+      //name = new Text("p", x, y - 15, 8, renderer);
+    }
     // Coordenadas Polares
     unsigned short int p1_angle    = (360 * 100) + angle;                   // ângulo em graus do ponto 1
     unsigned short int p1_distance = 14;                                    // distancia em graus do ponto 1

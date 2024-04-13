@@ -7,6 +7,8 @@
 Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     SDL_Init(SDL_INIT_EVERYTHING);
 
+    TTF_Init();
+
     _window = SDL_CreateWindow(title, x, y, w, h, flags);
     _renderer = SDL_CreateRenderer(_window, -1, 0);
 };
@@ -23,6 +25,7 @@ void Game::run() {
     asteroids.push_back(new Asteroid(50, 100, 1));
     asteroids.push_back(new Asteroid(250, 200, 2));
     asteroids.push_back(new Asteroid(200, 100, 2));
+
     
     gameLoop();
 }
@@ -115,6 +118,7 @@ void Game::draw() {
             laser->draw(_renderer);
         }
     }
+
 
     // Fim dos desenhos
     // A renderizar

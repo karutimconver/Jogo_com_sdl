@@ -5,7 +5,9 @@
 #include <SDL/SDL_image.h>
 #include <headers/globals.hpp>
 #include <headers/laser.hpp>
+#include <headers/text.hpp>
 #include <unordered_map>
+#include <iostream>
 #include <vector>
 
 class Ship {
@@ -19,7 +21,8 @@ private:
     float angular_speed = 2.5;                  // Velocidade com que gira em graus por tick 
     float shot_timer = 0;                       // Tempo desdo último disparo
     double cooldown = 20 * DT;                  // Tempo de recarga em Ticks
-    
+    Text* name = nullptr;                       // Nome da nave
+
     unsigned short int tip_x;
     unsigned short int tip_y;
 

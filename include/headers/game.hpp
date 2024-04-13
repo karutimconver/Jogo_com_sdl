@@ -1,10 +1,12 @@
 #pragma once
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <headers/ship.hpp>
 #include <headers/asteroids.hpp>
 #include <headers/laser.hpp>
+#include <headers/text.hpp>
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -20,7 +22,6 @@ private:
     SDL_Renderer* _renderer = nullptr;
 
     long double dt;
-
 public:
     GameState gameState = GameState::RUNNING;
 
