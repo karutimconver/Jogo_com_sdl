@@ -20,12 +20,6 @@ void Game::run() {
     ships.push_back(new Ship(3, SCREEN_WIDTH / 2 + distance_from_the_center, SCREEN_HEIGH / 2, player1_keys, &lasers, 1));
     ships.push_back(new Ship(3, SCREEN_WIDTH / 2 - distance_from_the_center, SCREEN_HEIGH / 2, player2_keys, &lasers, 2));
 
-    asteroids.push_back(new Asteroid(50, 50, 4));
-    asteroids.push_back(new Asteroid(100, 50, 4));
-    asteroids.push_back(new Asteroid(50, 100, 4));
-    asteroids.push_back(new Asteroid(250, 200, 4));
-    asteroids.push_back(new Asteroid(200, 100, 4));
-
     gameLoop();
 }
 
@@ -43,7 +37,7 @@ void Game::gameLoop() {
             
             const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
             
-            // jogadores
+            // Jogadores
             for (Ship* player : ships) {
                 player->update(keyboard_state);
                 if (player->hit) {
@@ -92,7 +86,13 @@ void Game::gameLoop() {
                 }
             }
 
-            //if (asteroids.len()){}
+            // Mudar de nível
+            if (asteroids.size() <= 0) {
+                this->level++;
+                for (int i = 0; i < std::min(this->level*2-1, 6); i++) {
+                    asteroids.push_back(new Asteroid(rand() % SCREEN_WIDTH, rand() % SCREEN_WIDTH, 4));
+                }
+            }
         }
 
         Uint64 end = SDL_GetPerformanceCounter();

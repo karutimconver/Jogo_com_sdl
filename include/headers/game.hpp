@@ -21,7 +21,7 @@ private:
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
 
-    unsigned short int level = 1;
+    unsigned short int level = 0;
 
     long double dt;
 public:
