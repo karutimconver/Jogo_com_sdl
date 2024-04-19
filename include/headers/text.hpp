@@ -16,5 +16,6 @@ public:
 
     Text(const char* text, int x, int y, int size, SDL_Renderer* renderer);
     ~Text();
+    void change_text(const char* text, SDL_Renderer* renderer);
     void draw(SDL_Renderer* renderer);
 };

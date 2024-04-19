@@ -35,4 +35,5 @@ public:
     std::vector<Ship*> ships;
     std::vector<Asteroid*> asteroids; 
     std::vector<Laser*> lasers; 
+    std::vector<Text> menu_text;
 };
