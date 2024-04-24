@@ -11,20 +11,21 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 
     _window = SDL_CreateWindow(title, x, y, w, h, flags);
     _renderer = SDL_CreateRenderer(_window, -1, 0);
+
+    // Criar Menu
+    Text title("Asteroids", SCREEN_WIDTH / 2, SCREEN_HEIGH / 3, 24, _renderer);
+    Text single_player("press 1 single player", SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, 16, _renderer);
+    Text multiplayer("press 2 for multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGH * 2 / 3, 16, _renderer);
 };
 
 void Game::run() {
+    // A criar jogadores
     int distance_from_the_center = 200;    // distancia da nave ao centro da tela
     int player1_keys [4] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W, SDL_SCANCODE_SPACE};
     int player2_keys [4] = {SDL_SCANCODE_RIGHT, SDL_SCANCODE_LEFT, SDL_SCANCODE_UP, SDL_SCANCODE_RCTRL};
+    
     ships.push_back(new Ship(3, SCREEN_WIDTH / 2 + distance_from_the_center, SCREEN_HEIGH / 2, player1_keys, &lasers, 1));
     ships.push_back(new Ship(3, SCREEN_WIDTH / 2 - distance_from_the_center, SCREEN_HEIGH / 2, player2_keys, &lasers, 2));
-
-    asteroids.push_back(new Asteroid(50, 50, 4));
-    asteroids.push_back(new Asteroid(100, 50, 4));
-    asteroids.push_back(new Asteroid(50, 100, 4));
-    asteroids.push_back(new Asteroid(250, 200, 4));
-    asteroids.push_back(new Asteroid(200, 100, 4));
 
     gameLoop();
 }
@@ -39,11 +40,10 @@ void Game::gameLoop() {
         
         handleEvents();
         
+        const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
         if (gameState == GameState::RUNNING) {
             
-            const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
-            
-            // jogadores
+            // Jogadores
             for (Ship* player : ships) {
                 player->update(keyboard_state);
                 if (player->hit) {
@@ -92,11 +92,18 @@ void Game::gameLoop() {
                 }
             }
 
-            //if (asteroids.len()){}
+            // Mudar de nível
+            if (asteroids.size() <= 0) {
+                this->level++;
+                for (int i = 0; i < std::min(this->level*2-1, 6); i++) {
+                    asteroids.push_back(new Asteroid(rand() % SCREEN_WIDTH, rand() % SCREEN_WIDTH, 4));
+                }
+            }
         }
+        keyboard_state = NULL;
 
-        Uint64 end = SDL_GetPerformanceCounter();
         draw();
+        Uint64 end = SDL_GetPerformanceCounter();
         dt = (end - start) / SDL_GetPerformanceFrequency();
         SDL_Delay(DT*1000-dt);
     }

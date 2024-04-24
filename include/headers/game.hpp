@@ -21,7 +21,7 @@ private:
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
 
-    unsigned short int level = 1;
+    unsigned short int level = 0;
 
     long double dt;
 public:
@@ -35,4 +35,5 @@ public:
     std::vector<Ship*> ships;
     std::vector<Asteroid*> asteroids; 
     std::vector<Laser*> lasers; 
+    std::vector<Text> menu_text;
 };

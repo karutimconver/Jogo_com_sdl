@@ -19,7 +19,7 @@ Ship::Ship(unsigned short int lives, unsigned short int x, unsigned short int y,
 };
 
 Ship::~Ship() {
-    laser_array = NULL;
+  laser_array = NULL;
 };
 
 // -------------
@@ -110,12 +110,10 @@ void Ship::draw(SDL_Renderer* renderer) {
     if (name == nullptr) {
         switch (this->n) {
         case 1:
-          
-          name = new Text("O Melhor", x, y, 8, renderer);
+          name = new Text("p1", x, y, 8, renderer);
           break;
         case 2:
-          
-          name = new Text("A Programadora", x, y, 8, renderer);
+          name = new Text("p2", x, y, 8, renderer);
           break;
       } 
     }
