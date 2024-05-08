@@ -9,7 +9,7 @@ Button::Button(const char* text, int x, int y, int size, SDL_Renderer* renderer,
     
     this->x = x;
     this->y = y;
-    //this->func = func;
+    this->func = func;
 
     this->width = strlen(text) * size;
     this->height = size;
@@ -27,8 +27,8 @@ void Button::check_mouse() {
     if (this->y - this->height < *mouse_y < this->y - this->height && this->x - this->width < *mouse_x < this->x - this->width) {
         this->hover = true;
 
-        // if (press_code == 1) // Se for clicado o butão esquerdo do rato 
-           // this->*func();
+        if (press_code == 1) // Se for clicado o butão esquerdo do rato 
+            this->func();
     }
 }
 
@@ -41,8 +41,12 @@ void Button::update(){
 };
 
 void Button::draw(SDL_Renderer* renderer){
-    if (hover) {
+    if (!hover) {
         int color [3] = {255, 255, 255};
+        text->change_color(color, renderer);
+    }
+    else {
+        int color [3] = {200, 180, 180};
         text->change_color(color, renderer);
     }
 

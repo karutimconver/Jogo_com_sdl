@@ -12,7 +12,7 @@ private:
     int x;
     int y;
 
-    //void* func;
+    void (*func) ();
     void check_mouse();
 public:
     Button(const char* text, int x, int y, int size, SDL_Renderer* renderer, void (func) ());

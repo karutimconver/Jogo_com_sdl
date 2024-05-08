@@ -7,6 +7,7 @@
 #include <headers/asteroids.hpp>
 #include <headers/laser.hpp>
 #include <headers/text.hpp>
+#include <headers/button.hpp>
 #include <algorithm>
 #include <iostream>
 #include <vector>
