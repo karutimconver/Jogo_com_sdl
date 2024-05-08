@@ -34,7 +34,7 @@ private:
     void move();
 public:
     bool invincible = true;                     // Se está ou não invencivel
-    unsigned short int n;                       // número da nave
+    unsigned short int n;                       // número da nave (0 se for para apenas um jogador)
     float x;
     float y;
     bool hit = false;                           // Se foi ou não atingido

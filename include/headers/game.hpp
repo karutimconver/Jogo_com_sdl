@@ -25,11 +25,11 @@ private:
 
     long double dt;
 public:
-    GameState gameState = GameState::RUNNING;
+    GameState gameState = GameState::MENU;
 
     Game(const char* title, int x, int y, int w, int h, Uint32 flags);
     
-    void run();
+    void run(int n);
     void draw();
 
     std::vector<Ship*> ships;

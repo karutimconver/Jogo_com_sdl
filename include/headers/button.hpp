@@ -6,11 +6,16 @@
 class Button {
 private:
     Text* text;
+    int width;
+    int height;
+    bool hover = false; // Se têm o não o rato em cima
+    int x;
+    int y;
 
-    bool check_pressed();
-    bool check_hover();
+    //void* func;
+    void check_mouse();
 public:
-    Button(const char* text, int x, int y, int size, SDL_Renderer* renderer);
+    Button(const char* text, int x, int y, int size, SDL_Renderer* renderer, void (func) ());
     void update();
     void draw(SDL_Renderer* renderer);
 };
