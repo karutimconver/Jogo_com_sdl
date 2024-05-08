@@ -13,11 +13,9 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     _renderer = SDL_CreateRenderer(_window, -1, 0);
 
     // Criar Menu
-<<<<<<< Updated upstream
     Text main_title("Asteroids", SCREEN_WIDTH / 2, SCREEN_HEIGH / 3, 24, _renderer);
     Text single_player("press 1 single player", SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, 16, _renderer);
     Text multiplayer("press 2 for multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGH * 2 / 3, 16, _renderer);
-=======
     Text main_title(title, SCREEN_WIDTH / 2, SCREEN_HEIGH * 2 / 5, 32, _renderer);
     Text single_player("single player", SCREEN_WIDTH / 2, SCREEN_HEIGH * 6 / 10, 16, _renderer);
     Text multiplayer("multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGH * 2 / 3, 16, _renderer);
@@ -25,7 +23,6 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     menu_text.push_back(main_title);
     menu_text.push_back(single_player);
     menu_text.push_back(multiplayer);
->>>>>>> Stashed changes
 };
 
 void Game::run(int n) {
