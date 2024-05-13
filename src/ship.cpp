@@ -107,15 +107,18 @@ void Ship::update(const Uint8* keyboard_state) {
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
-    if (name == nullptr) {
-        switch (this->n) {
-        case 1:
-          name = new Text("p1", x, y, 8, renderer);
-          break;
-        case 2:
-          name = new Text("p2", x, y, 8, renderer);
-          break;
-      } 
+    // Atribuição de nome à nave
+    if (this->n != 0) {
+      if (name == nullptr) {
+          switch (this->n) {
+          case 1:
+            name = new Text("p1", x, y, 8, renderer);
+            break;
+          case 2:
+            name = new Text("p2", x, y, 8, renderer);
+            break;
+        } 
+      }
     }
 
     // Coordenadas Polares
@@ -135,6 +138,7 @@ void Ship::draw(SDL_Renderer* renderer) {
     unsigned short int x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
     unsigned short int y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
+    //  Desenhar nave
     if (!invincible) {
       aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
     }
@@ -142,10 +146,15 @@ void Ship::draw(SDL_Renderer* renderer) {
       aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, 120);
     }
     
-    name->x = this->x;
-    name->y = this->y + 24;
-    name->draw(renderer);
-    
+    // Atualizar e desenhar o nome da nave
+    if (this->n != 0) {
+      name->x = this->x;
+      name->y = this->y + 24;
+      name->draw(renderer);
+      
+    }
+
+    // Desenhos de debug
     if (DEBUGGING) {
       aacircleRGBA(renderer, x, y, radius, 120, 255, 120, SDL_ALPHA_OPAQUE);
     }
