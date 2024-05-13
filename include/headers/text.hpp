@@ -21,5 +21,6 @@ public:
     ~Text();
     void change_text(const char* text, SDL_Renderer* renderer);
     void change_color(int color [3], SDL_Renderer* renderer);
+    const char * get_text();
     void draw(SDL_Renderer* renderer);
 };

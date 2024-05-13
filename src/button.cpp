@@ -1,18 +1,18 @@
 #include <button.hpp>
+#include <iostream>
 
 //  --------------
 //  | Construtor |
 //  --------------
 
-Button::Button(const char* text, int x, int y, int size, SDL_Renderer* renderer, void (*func) ()) {
+Button::Button(const char* text, int x, int y, int size, SDL_Renderer* renderer){
     this->text = new Text(text, x, y, size, renderer);
     
     this->x = x;
     this->y = y;
-    this->func = func;
 
-    this->width = strlen(text) * size;
-    this->height = size;
+    this->width = strlen(text) * size / 2;
+    this->height = size / 2;
 };
 
 // --------------------------------
@@ -20,35 +20,46 @@ Button::Button(const char* text, int x, int y, int size, SDL_Renderer* renderer,
 // --------------------------------
 
 void Button::check_mouse() {
-    int *mouse_x, *mouse_y;
+    int mouse_x;
+    int mouse_y;
 
-    unsigned short int press_code = SDL_BUTTON(SDL_GetMouseState(mouse_x, mouse_y));
+    Uint32 state = SDL_GetMouseState(&mouse_x, &mouse_y);
 
-    if (this->y - this->height < *mouse_y < this->y - this->height && this->x - this->width < *mouse_x < this->x - this->width) {
+    if (this->x - width < mouse_x && mouse_x < this->x + width && this->y - height < mouse_y && mouse_y < this->y + height) {
         this->hover = true;
-
-        if (press_code == 1) // Se for clicado o butão esquerdo do rato 
-            this->func();
+    
+        if (SDL_BUTTON(state) == 1) this->pressed = true;
     }
-}
+    else {
+        this->hover = false;
+    }
+};
+
+// -----------
+// | Getters |
+// -----------
+
+const char * Button::get_text() {
+    return this->text->get_text();
+};
 
 // -----------------
 // | Ciclo de jogo |
 // -----------------
 
 void Button::update(){
-
+    this->check_mouse();
 };
 
 void Button::draw(SDL_Renderer* renderer){
-    if (!hover) {
-        int color [3] = {255, 255, 255};
-        text->change_color(color, renderer);
-    }
-    else {
-        int color [3] = {200, 180, 180};
-        text->change_color(color, renderer);
-    }
+    //if (!hover) {
+    //    int color [3] = {255, 255, 255};
+    //    text->change_color(color, renderer);
+    //}
+    //else {
+    //    int color [3] = {200, 180, 180};
+    //    text->change_color(color, renderer);
+    //}
 
     text->draw(renderer);
 };

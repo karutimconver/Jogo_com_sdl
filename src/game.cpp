@@ -14,12 +14,12 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 
     // Criar Menu
     Text main_title("Asteroids", SCREEN_WIDTH / 2, SCREEN_HEIGH / 3, 24, _renderer);
-    Text single_player("press 1 single player", SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, 16, _renderer);
-    Text multiplayer("press 2 for multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGH * 2 / 3, 16, _renderer);
+    Button single_player("single player", SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, 16, _renderer);
+    Button multiplayer("multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGH * 2 / 3, 16, _renderer);
 
     menu_text.push_back(main_title);
-    menu_text.push_back(single_player);
-    menu_text.push_back(multiplayer);
+    menu_buttons.push_back(single_player);
+    menu_buttons.push_back(multiplayer);
 };
 
 void Game::run(int n) {
@@ -39,8 +39,6 @@ void Game::run(int n) {
         default:
             std::cout << "Error: unexpected number of players!";
     }
-
-    gameLoop();
 }
 
 // -----------------
@@ -54,8 +52,8 @@ void Game::gameLoop() {
         handleEvents();
         
         const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
+        // jogo a correr
         if (gameState == GameState::RUNNING) {
-            
             // Jogadores
             for (Ship* player : ships) {
                 player->update(keyboard_state);
@@ -113,6 +111,27 @@ void Game::gameLoop() {
                 }
             }
         }
+
+        // Menu
+        else if (gameState == GameState::MENU) {
+            for (Button button : menu_buttons) {
+                button.update();
+                
+                if (button.pressed) {
+                    gameState = GameState::RUNNING;
+
+                    std::cout << button.get_text();
+                    if (strcmp(button.get_text(), "single player") == 0) { 
+                        this->run(1); 
+                    }
+                    else if (button.get_text() ==  (const char *)"multiplayer") { 
+                        this->run(2); 
+                    }
+                }
+            }
+        }
+
+
         keyboard_state = NULL;
 
         draw();
@@ -146,6 +165,10 @@ void Game::draw() {
     case GameState::MENU:
         for (Text text : menu_text) {
             text.draw(_renderer);
+        }
+        
+        for (Button button : menu_buttons) {
+            button.draw(_renderer);
         }
 
         break;

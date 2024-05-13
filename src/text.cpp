@@ -49,6 +49,9 @@ void Text::change_color(int color [3], SDL_Renderer* renderer) {
     change_text(text, renderer);
 };
 
+const char * Text::get_text() {
+    return this->text;
+};
 
 // -----------
 // | Desenho |

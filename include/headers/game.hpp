@@ -16,7 +16,6 @@ enum class GameState {RUNNING, EXIT, MENU};
 
 class Game {
 private:
-    void gameLoop();
     void handleEvents();
 
     SDL_Window* _window = nullptr;
@@ -31,10 +30,12 @@ public:
     Game(const char* title, int x, int y, int w, int h, Uint32 flags);
     
     void run(int n);
+    void gameLoop();
     void draw();
 
     std::vector<Ship*> ships;
     std::vector<Asteroid*> asteroids; 
     std::vector<Laser*> lasers; 
     std::vector<Text> menu_text;
+    std::vector<Button> menu_buttons;
 };
