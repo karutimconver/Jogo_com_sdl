@@ -5,9 +5,13 @@
 // ------------------------------
 
 Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
-    SDL_Init(SDL_INIT_EVERYTHING);
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+        std::cout << "Couldn't initialize SDL2" << SDL_GetError();
+    };
 
-    TTF_Init();
+    if (TTF_Init() == -1) {
+        std::cout << "Couldn't initialize SDL2_ttf" << TTF_GetError();
+    };
 
     _window = SDL_CreateWindow(title, x, y, w, h, flags);
     _renderer = SDL_CreateRenderer(_window, -1, 0);
@@ -121,10 +125,10 @@ void Game::gameLoop() {
                     gameState = GameState::RUNNING;
 
                     std::cout << button.get_text();
-                    if (strcmp(button.get_text(), "single player") == 0) { 
+                    if (button.get_text() == "single player") { 
                         this->run(1); 
                     }
-                    else if (button.get_text() ==  (const char *)"multiplayer") { 
+                    else if (button.get_text() == "multiplayer") { 
                         this->run(2); 
                     }
                 }

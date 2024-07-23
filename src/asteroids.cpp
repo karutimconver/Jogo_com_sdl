@@ -21,8 +21,8 @@ Asteroid::Asteroid(int x, int y, int size) {
   this->v_distance_array = new float [this->vertices];
   this->v_angle_array = new float [this->vertices];
   for (int i = 0; i < this->vertices; i++) {
-      v_distance_array[i] = ((rand() % 50) * 0.1);
-      v_angle_array[i] = ((rand() % 50) * 0.1);
+    v_distance_array[i] = ((rand() % 50) * 0.1);
+    v_angle_array[i] = ((rand() % 50) * 0.1);
   }
 };
 
