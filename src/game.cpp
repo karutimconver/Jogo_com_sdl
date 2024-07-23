@@ -5,7 +5,9 @@
 // ------------------------------
 
 Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
-    SDL_Init(SDL_INIT_EVERYTHING);
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+        std::cout << "Couldn't initialize SDL2" << SDL_GetError();
+    };
 
     TTF_Init();
 

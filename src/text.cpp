@@ -11,6 +11,10 @@ Text::Text(const char* text, int x, int y, int size, SDL_Renderer* renderer) {
     this->size = size;
     this->font = TTF_OpenFont("./fonts/arcade.ttf", size);
 
+    if (this->font == NULL) {
+        
+    }
+
     SDL_Surface* surface = TTF_RenderText_Solid(this->font, text, {255, 255, 255});
     
     this->texture = SDL_CreateTextureFromSurface(renderer, surface);
