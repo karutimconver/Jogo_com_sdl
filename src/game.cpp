@@ -121,10 +121,10 @@ void Game::gameLoop() {
                     gameState = GameState::RUNNING;
 
                     std::cout << button.get_text();
-                    if (strcmp(button.get_text(), "single player") == 0) { 
+                    if (button.get_text() == "single player") { 
                         this->run(1); 
                     }
-                    else if (button.get_text() ==  (const char *)"multiplayer") { 
+                    else if (button.get_text() == "multiplayer") { 
                         this->run(2); 
                     }
                 }
