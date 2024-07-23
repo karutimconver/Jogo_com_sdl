@@ -2,8 +2,8 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <iostream>
 #include <math.h>
-#include <cstring>
 
 class Text {
 private:
