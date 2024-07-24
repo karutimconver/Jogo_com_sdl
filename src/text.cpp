@@ -12,10 +12,10 @@ Text::Text(const char* text, int x, int y, int size, SDL_Renderer* renderer) {
     this->font = TTF_OpenFont("./fonts/arcade.ttf", size);
 
     if (this->font == nullptr) {
-        std::cout << "Couldn't open font";
+        std::cout << "Couldn't open font!\n";
     }
 
-    SDL_Surface* surface = TTF_RenderText_Solid(this->font, text, {255, 255, 255});
+    SDL_Surface* surface = TTF_RenderText_Solid(this->font, text, {color[0], color[1], color[2]});
     
     this->texture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -35,17 +35,17 @@ Text::~Text() {
 // ------------------
 
 void Text::change_text(const char* text, SDL_Renderer* renderer) {
-    SDL_Surface* surface = TTF_RenderText_Solid(this->font, text, {255, 255, 255});
+    SDL_Surface* surface = TTF_RenderText_Solid(this->font, text, {this->color[0], this->color[1], this->color[2]});
     
     this->texture = SDL_CreateTextureFromSurface(renderer, surface);
 
     SDL_FreeSurface(surface);
     
     rectangle.w = strlen(text) * this->size;
-    rectangle.h = strlen(text) * this->size;
+    rectangle.h = this->size;
 };
 
-void Text::change_color(int color [3], SDL_Renderer* renderer) {
+void Text::change_color(Uint8 color [3], SDL_Renderer* renderer) {
     this->color[0] = color[0];
     this->color[1] = color[1];
     this->color[2] = color[2];

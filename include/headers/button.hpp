@@ -7,7 +7,7 @@ class Button {
 private:
     int width;
     int height;
-    bool hover = false; // Se têm o não o rato em cima
+    bool hover; // Se o rato está ou não em cima do botão
     int x;
     int y;
 

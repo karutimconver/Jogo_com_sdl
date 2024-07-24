@@ -12,15 +12,15 @@ private:
     SDL_Rect rectangle;
     int size;
     const char* text;
+    Uint8 color [3] = {255, 255, 255};
 public:
     float x;
     float y;
-    int color [3] = {255, 255, 255};
 
     Text(const char* text, int x, int y, int size, SDL_Renderer* renderer);
     ~Text();
     void change_text(const char* text, SDL_Renderer* renderer);
-    void change_color(int color [3], SDL_Renderer* renderer);
+    void change_color(Uint8 color [3], SDL_Renderer* renderer);
     const char * get_text();
     void draw(SDL_Renderer* renderer);
 };

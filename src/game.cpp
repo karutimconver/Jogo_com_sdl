@@ -19,7 +19,7 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     // Criar Menu
     Text main_title("Asteroids", SCREEN_WIDTH / 2, SCREEN_HEIGH / 3, 24, _renderer);
     Button single_player("single player", SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, 16, _renderer);
-    Button multiplayer("multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGH * 2 / 3, 16, _renderer);
+    Button multiplayer("multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGH * 21 / 36, 16, _renderer);
 
     menu_text.push_back(main_title);
     menu_buttons.push_back(single_player);
@@ -118,7 +118,7 @@ void Game::gameLoop() {
 
         // Menu
         else if (gameState == GameState::MENU) {
-            for (Button button : menu_buttons) {
+            for (Button& button : menu_buttons) {
                 button.update();
                 
                 if (button.pressed) {
@@ -167,11 +167,11 @@ void Game::draw() {
         break;
     
     case GameState::MENU:
-        for (Text text : menu_text) {
+        for (Text& text : menu_text) {
             text.draw(_renderer);
         }
         
-        for (Button button : menu_buttons) {
+        for (Button& button : menu_buttons) {
             button.draw(_renderer);
         }
 
