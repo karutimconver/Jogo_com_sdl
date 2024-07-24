@@ -1,8 +1,8 @@
 #pragma once
 #include <cmath>
 
-#define SCREEN_WIDTH 1024// 640
-#define SCREEN_HEIGHT 720// 580
+#define SCREEN_WIDTH 640 // 1024
+#define SCREEN_HEIGHT 580 // 720
 #define DEBUGGING false
 
 #define DT 1.0L/120.0L

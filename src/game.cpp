@@ -130,7 +130,7 @@ void Game::gameLoop() {
             // Mudar de nível
             if (asteroids.size() <= 0) {
                 this->level++;
-                for (int i = 0; i < std::min(this->level*2-1, 6); i++) {
+                for (int i = 0; i < std::min(this->level*2 - 2 + (int) ships.size(), 8); i++) {
                     int x = rand() % SCREEN_WIDTH;
                     int y = rand() % SCREEN_HEIGHT;
 
