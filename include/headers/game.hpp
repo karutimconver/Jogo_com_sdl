@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 
-enum class GameState {RUNNING, EXIT, MENU};
+enum class GameState {RUNNING, EXIT, MENU, PAUSED, GAMEOVER};
 
 class Game {
 private:
@@ -38,4 +38,5 @@ public:
     std::vector<Laser*> lasers; 
     std::vector<Text> menu_text;
     std::vector<Button> menu_buttons;
+    std::vector<Text> pause_text;
 };

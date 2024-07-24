@@ -27,8 +27,8 @@ void Laser::move() {
 
 void Laser::screen_wrap() {
     if (this->y < 0)
-        this->y = SCREEN_HEIGH;
-    else if (this->y > SCREEN_HEIGH)
+        this->y = SCREEN_HEIGHT;
+    else if (this->y > SCREEN_HEIGHT)
         this->y = 0;
 
     if (this->x < 0)

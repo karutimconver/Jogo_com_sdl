@@ -17,14 +17,21 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     _renderer = SDL_CreateRenderer(_window, -1, 0);
 
     // Criar Menu
-    Text main_title("Asteroids", SCREEN_WIDTH / 2, SCREEN_HEIGH / 3, 24, _renderer);
-    Button single_player("single player", SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, 16, _renderer);
-    Button multiplayer("multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGH * 21 / 36, 16, _renderer);
+    Text main_title("Asteroids", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3, 24, _renderer);
+    Button single_player("single player", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 16, _renderer);
+    Button multiplayer("multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 50, 16, _renderer);
 
     menu_text.push_back(main_title);
     menu_buttons.push_back(single_player);
     menu_buttons.push_back(multiplayer);
-};
+
+    // Criar texto de pausa
+    Text paused("PAUSED", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 20, 20, _renderer);
+    Text unpause("press 'esc' to unpause", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 10, 16, _renderer);
+
+    pause_text.push_back(paused);
+    pause_text.push_back(unpause);
+}
 
 void Game::run(int n) {
     // A criar jogadores
@@ -34,11 +41,11 @@ void Game::run(int n) {
     
     switch (n) {
         case 1:
-            ships.push_back(new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, player1_keys, &lasers, 0));
+            ships.push_back(new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, player1_keys, &lasers, 0));
             break;
         case 2:
-            ships.push_back(new Ship(3, SCREEN_WIDTH / 2 - distance_from_the_center, SCREEN_HEIGH / 2, player1_keys, &lasers, 1));
-            ships.push_back(new Ship(3, SCREEN_WIDTH / 2 + distance_from_the_center, SCREEN_HEIGH / 2, player2_keys, &lasers, 2));
+            ships.push_back(new Ship(3, SCREEN_WIDTH / 2 - distance_from_the_center, SCREEN_HEIGHT / 2, player1_keys, &lasers, 1));
+            ships.push_back(new Ship(3, SCREEN_WIDTH / 2 + distance_from_the_center, SCREEN_HEIGHT / 2, player2_keys, &lasers, 2));
             break;
         default:
             std::cout << "Error: unexpected number of players!";
@@ -64,7 +71,7 @@ void Game::gameLoop() {
                 if (player->hit) {
                     if (player->lives > 1) {
                         int keys[4] = {player->keys["RIGHT"], player->keys["LEFT"], player->keys["UP"], player->keys["SHOT"]};
-                        std::replace(ships.begin(), ships.end(), player, new Ship(player->lives-1, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2, keys, &lasers, player->n));
+                        std::replace(ships.begin(), ships.end(), player, new Ship(player->lives-1, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, keys, &lasers, player->n));
                     }
                     else {
                         auto ships_remove = std::remove_if(ships.begin(), ships.end(), [&] (Ship* player) {return player->hit;});
@@ -111,11 +118,33 @@ void Game::gameLoop() {
             if (asteroids.size() <= 0) {
                 this->level++;
                 for (int i = 0; i < std::min(this->level*2-1, 6); i++) {
-                    asteroids.push_back(new Asteroid(rand() % SCREEN_WIDTH, rand() % SCREEN_WIDTH, 4));
+                    int x = rand() % SCREEN_WIDTH;
+                    int y = rand() % SCREEN_HEIGHT;
+
+                    while (1) {
+                        if (ships.size() == 2) {
+                            if (calculate_distance(x, y, ships[0]->x, ships[0]->y) > 50 &&
+                                calculate_distance(x, y, ships[1]->x, ships[1]->y) > 50)
+                                break;
+                        }
+                        else {
+                            if (calculate_distance(x, y, ships[0]->x, ships[0]->y) > 50)
+                                break;
+                        }
+                        x = rand() % SCREEN_WIDTH;
+                        y = rand() % SCREEN_HEIGHT;
+                    }
+
+                    asteroids.push_back(new Asteroid(x, y, 4));
                 }
             }
-        }
 
+            // Fim do jogo
+            if (this->ships.size() == 0) {
+                gameState = GameState::GAMEOVER;
+            }
+        }
+    
         // Menu
         else if (gameState == GameState::MENU) {
             for (Button& button : menu_buttons) {
@@ -135,7 +164,6 @@ void Game::gameLoop() {
             }
         }
 
-
         keyboard_state = NULL;
 
         draw();
@@ -148,8 +176,7 @@ void Game::gameLoop() {
 void Game::draw() {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
-    // Mandar para aqui os desenhos
-
+    // Inicio dos desenhos
     switch (gameState) {
     case GameState::RUNNING:
         for (Ship* player : ships) {
@@ -166,6 +193,25 @@ void Game::draw() {
 
         break;
     
+    case GameState::PAUSED:
+        for (Ship* player : ships) {
+            player->draw(_renderer);
+        }
+        
+        for (Asteroid* asteroid : asteroids) {
+            asteroid->draw(_renderer);
+        }
+
+        for (Laser* laser : lasers) {
+            laser->draw(_renderer);
+        }
+
+        for (Text& text : pause_text) {
+            text.draw(_renderer);
+        }
+
+        break;
+    
     case GameState::MENU:
         for (Text& text : menu_text) {
             text.draw(_renderer);
@@ -177,8 +223,6 @@ void Game::draw() {
 
         break;
     }
-
-
     // Fim dos desenhos
     // A renderizar
     SDL_RenderPresent(_renderer);
@@ -195,6 +239,19 @@ void Game::handleEvents() {
     switch (event.type) {
         case SDL_QUIT:
             gameState = GameState::EXIT;
+            break;
+        case SDL_KEYDOWN:
+            if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+                if (gameState == GameState::PAUSED) {
+                    std::cout << "Unpaused\n";
+                    gameState = GameState::RUNNING;
+                }
+                else {
+                    std::cout << "paused \n";
+                    gameState = GameState::PAUSED;
+                }
+            }
+
             break;
     }
 }

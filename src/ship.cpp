@@ -80,8 +80,8 @@ void Ship::apply_friction() {
 
 void Ship::screen_wrap(){
   if (this->y + this->radius < 0)
-    this->y = SCREEN_HEIGH + this->radius;
-  else if (this->y - this->radius > SCREEN_HEIGH)
+    this->y = SCREEN_HEIGHT + this->radius;
+  else if (this->y - this->radius > SCREEN_HEIGHT)
     this->y = 0 - this->radius;
 
   if (this->x + this->radius < 0)
