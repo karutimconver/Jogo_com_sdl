@@ -17,7 +17,7 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     _renderer = SDL_CreateRenderer(_window, -1, 0);
 
     // Criar Menu
-    Text main_title("Asteroids", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3, 24, _renderer);
+    Text main_title("Asteroids", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3, 30, _renderer);
     Button single_player("single player", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 16, _renderer);
     Button multiplayer("multiplayer", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 50, 16, _renderer);
 
