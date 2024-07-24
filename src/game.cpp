@@ -5,6 +5,10 @@
 // ------------------------------
 
 Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
+    std::cout << "size of asteroid: " << sizeof(Asteroid) << " bytes\n";
+    std::cout << "size of laser: " << sizeof(Laser) << " bytes\n";
+    std::cout << "size of ship: " << sizeof(Ship) << " bytes\n";
+
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cout << "Couldn't initialize SDL2" << SDL_GetError();
     };
@@ -101,9 +105,13 @@ void Game::gameLoop() {
                 asteroid->update(&lasers, &ships);
 
                 // Criar novos asteroides
-                if (asteroid->size > 1 && asteroid->hit) {     
+                if (asteroid->size > 1 && asteroid->hit) { 
                     asteroids.push_back(new Asteroid(asteroid->x, asteroid->y, asteroid->size/2));
                     asteroids.push_back(new Asteroid(asteroid->x, asteroid->y, asteroid->size/2));                           
+
+                    if (level >= 7) {
+                        asteroids.push_back(new Asteroid(asteroid->x, asteroid->y, asteroid->size/2));
+                    }
                 }
             }
             // Destruir
@@ -186,7 +194,7 @@ void Game::gameLoop() {
                 if (button.pressed) {
                     gameState = GameState::RUNNING;
 
-                    std::cout << button.get_text();
+                    std::cout << "button "<< button.get_text() << " pressed!\n";
                     if (button.get_text() == "try again") { 
                         this->run(this->player_num); 
                     }
@@ -289,7 +297,7 @@ void Game::handleEvents() {
         case SDL_KEYDOWN:
             if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
                 if (gameState == GameState::PAUSED) {
-                    std::cout << "Unpaused\n";
+                    std::cout << "Unpaused \n";
                     gameState = GameState::RUNNING;
                 }
                 else if (gameState == GameState::RUNNING) {
@@ -300,7 +308,7 @@ void Game::handleEvents() {
 
             break;
         case SDL_MOUSEBUTTONDOWN: 
-            std::cout << "mouse down";
+            std::cout << "mouse down\n";
             switch (gameState) {
                 case GameState::MENU:
                     for (Button& button : menu_buttons) {
