@@ -107,20 +107,6 @@ void Ship::update(const Uint8* keyboard_state) {
 };
 
 void Ship::draw(SDL_Renderer* renderer) {
-    // Atribuição de nome à nave
-    if (this->n != 0) {
-      if (name == nullptr) {
-          switch (this->n) {
-          case 1:
-            name = new Text("p1", x, y, 8, renderer);
-            break;
-          case 2:
-            name = new Text("p2", x, y, 8, renderer);
-            break;
-        } 
-      }
-    }
-
     // Coordenadas Polares
     unsigned short int p1_angle    = (360 * 100) + angle;                   // ângulo em graus do ponto 1
     unsigned short int p1_distance = 14;                                    // distancia em graus do ponto 1
@@ -144,6 +130,72 @@ void Ship::draw(SDL_Renderer* renderer) {
     }
     else {
       aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, 120);
+    }
+
+    // GUI
+    unsigned short int x, y, x1, y1;
+    y = 20;
+    if (this->n != 0) {
+      // Atribuição de nome à nave
+      if (name == nullptr) {
+          switch (this->n) {
+          case 1:
+            name = new Text("p1", x, y, 8, renderer);
+            break;
+          case 2:
+            name = new Text("p2", x, y, 8, renderer);
+            break;
+        } 
+      }
+
+      // Vidas
+      // Coordenadas do centro da nave
+      switch (this->n) {
+        case 1:
+          x = 20;
+          break;
+        case 2:
+          x = SCREEN_WIDTH - 70;
+          break;
+      }
+
+      for (int i = 0; i < this->lives; i++) {
+        // Criar uma replica da nave virada para cima
+        p1_angle = (360 * 10) + 0 - 90;               // ângulo em graus do ponto 1 
+        p2_angle = (360 * 10) + 130 - 90;             // ângulo em graus do ponto 2
+        p3_angle = (360 * 10) + 230 - 90;             // ângulo em graus do ponto 3
+
+        x1 = round(x + p1_distance * cos(p1_angle * M_PI / 180));
+        y1 = round(y + p1_distance * sin(p1_angle * M_PI / 180));
+        x2 = round(x + p2_distance * cos(p2_angle * M_PI / 180));
+        y2 = round(y + p2_distance * sin(p2_angle * M_PI / 180));
+        x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
+        y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
+
+        aatrigonRGBA(renderer, x1, y1, x2, y2, x3, y3, 255, 255, 255, 210);
+        
+        x += calculate_distance(x2, y2, x3, y3) + 3;
+      }
+    }
+    else {
+      x = 20;
+      for (int i = 0; i < this->lives; i++) {
+        // Criar uma replica da nave virada para cima
+        p1_angle = (360 * 10) + 0 - 90;               // ângulo em graus do ponto 1 
+        p2_angle = (360 * 10) + 130 - 90;             // ângulo em graus do ponto 2
+        p3_angle = (360 * 10) + 230 - 90;             // ângulo em graus do ponto 3
+
+        x1 = round(x + p1_distance * cos(p1_angle * M_PI / 180));
+        y1 = round(y + p1_distance * sin(p1_angle * M_PI / 180));
+        x2 = round(x + p2_distance * cos(p2_angle * M_PI / 180));
+        y2 = round(y + p2_distance * sin(p2_angle * M_PI / 180));
+        x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
+        y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
+
+        aatrigonRGBA(renderer, x1, y1, x2, y2, x3, y3, 255, 255, 255, 210);
+        
+        x += calculate_distance(x2, y2, x3, y3) + 3;
+      }
     }
     
     // Atualizar e desenhar o nome da nave
