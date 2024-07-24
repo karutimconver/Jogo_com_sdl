@@ -157,6 +157,6 @@ void Ship::draw(SDL_Renderer* renderer) {
     // Desenhos de debug
     if (DEBUGGING) {
       aacircleRGBA(renderer, x, y, radius, 120, 255, 120, SDL_ALPHA_OPAQUE);
-      aacircleRGBA(renderer, x, y, 50, 120, 255, 120, SDL_ALPHA_OPAQUE);
+      aacircleRGBA(renderer, x, y, 80, 120, 255, 120, SDL_ALPHA_OPAQUE);
     }
 };

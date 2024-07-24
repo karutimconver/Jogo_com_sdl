@@ -33,7 +33,7 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     pause_text.push_back(unpause);
 
     // Criar estado de fim do jogo
-    Text gameover("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 60, 24, _renderer);
+    Text gameover("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 60, 30, _renderer);
     Button retry("try again", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 10, 16, _renderer);
     Button menu("menu", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 50, 16, _renderer);
 
@@ -136,12 +136,12 @@ void Game::gameLoop() {
 
                     while (1) {
                         if (ships.size() == 2) {
-                            if (calculate_distance(x, y, ships[0]->x, ships[0]->y) > 50 &&
-                                calculate_distance(x, y, ships[1]->x, ships[1]->y) > 50)
+                            if (calculate_distance(x, y, ships[0]->x, ships[0]->y) > 80 &&
+                                calculate_distance(x, y, ships[1]->x, ships[1]->y) > 80)
                                 break;
                         }
                         else {
-                            if (calculate_distance(x, y, ships[0]->x, ships[0]->y) > 50)
+                            if (calculate_distance(x, y, ships[0]->x, ships[0]->y) > 80)
                                 break;
                         }
                         x = rand() % SCREEN_WIDTH;

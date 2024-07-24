@@ -11,7 +11,7 @@
 
 class Asteroid {
 private:
-    unsigned short int r = 10;       // Raio padrão
+    unsigned short int r = 10;       // Raio base
     Vec2d velocity;                  // Vetor velocidade
     float speed;                     // Rapidez
     float angle = 0;                 // Ângulo em graus
