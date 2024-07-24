@@ -21,7 +21,7 @@ private:
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
 
-    unsigned short int level = 0;
+    unsigned short int level;
 
     int player_num = 0;
 

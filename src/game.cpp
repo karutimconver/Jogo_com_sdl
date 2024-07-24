@@ -43,6 +43,8 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 }
 
 void Game::run(int n) {
+    level = 0;
+
     // A criar jogadores
     int distance_from_the_center = 200;    // distancia da nave ao centro da tela
     int player1_keys [4] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W, SDL_SCANCODE_SPACE};
@@ -153,6 +155,9 @@ void Game::gameLoop() {
             // Fim do jogo
             if (this->ships.size() == 0) {
                 gameState = GameState::GAMEOVER;
+
+                asteroids.clear();
+                lasers.clear();
             }
         }
     
