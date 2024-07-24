@@ -33,9 +33,9 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     pause_text.push_back(unpause);
 
     // Criar estado de fim do jogo
-    Text gameover("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 30, 24, _renderer);
+    Text gameover("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 60, 24, _renderer);
     Button retry("try again", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 10, 16, _renderer);
-    Button menu("menu", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 25, 16, _renderer);
+    Button menu("menu", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 50, 16, _renderer);
 
     gameover_text.push_back(gameover);
     gameover_buttons.push_back(retry);
@@ -159,8 +159,6 @@ void Game::gameLoop() {
         // Menu
         else if (gameState == GameState::MENU) {
             for (Button& button : menu_buttons) {
-                button.update();
-                
                 if (button.pressed) {
                     gameState = GameState::RUNNING;
 
@@ -172,14 +170,14 @@ void Game::gameLoop() {
                         this->run(2); 
                     }
                 }
+                
+                button.update();
             }
         }
 
         // Estado de fim de jogo
         else if (gameState == GameState::GAMEOVER) {
             for (Button& button : gameover_buttons) {
-                button.update();
-                
                 if (button.pressed) {
                     gameState = GameState::RUNNING;
 
@@ -191,6 +189,8 @@ void Game::gameLoop() {
                         gameState = GameState::MENU;
                     }
                 }
+
+                button.update();
             }
         }
 
@@ -294,5 +294,19 @@ void Game::handleEvents() {
             }
 
             break;
+        case SDL_MOUSEBUTTONDOWN: 
+            std::cout << "mouse down";
+            switch (gameState) {
+                case GameState::MENU:
+                    for (Button& button : menu_buttons) {
+                        button.pressed = button.hover;
+                    }
+                    break;
+                case GameState::GAMEOVER:
+                    for(Button& button : gameover_buttons) {
+                        button.pressed = button.hover;
+                    }
+                    break;
+            }
     }
 }

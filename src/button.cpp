@@ -7,7 +7,7 @@
 
 Button::Button(const char* text, int x, int y, int size, SDL_Renderer* renderer){
     this->text = new Text(text, x, y, size, renderer);
-    this->hover = true;
+    this->hover = false;
     this->x = x;
     this->y = y;
 
@@ -21,7 +21,7 @@ Button::Button(const char* text, int x, int y, int size, SDL_Renderer* renderer)
 
 void Button::check_mouse() {
     this->pressed = false;
-    
+
     int mouse_x;
     int mouse_y;
 
@@ -30,8 +30,6 @@ void Button::check_mouse() {
 
     if (this->x - width < mouse_x && mouse_x < this->x + width && this->y - height < mouse_y && mouse_y < this->y + height) {
         this->hover = true;
-
-        if (SDL_BUTTON(state) == 1) {this->pressed = true;}
     }
     else {
         this->hover = false;

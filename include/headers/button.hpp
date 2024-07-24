@@ -7,13 +7,13 @@ class Button {
 private:
     int width;
     int height;
-    bool hover; // Se o rato está ou não em cima do botão
     int x;
     int y;
 
     void check_mouse();
 public:
     Text* text;
+    bool hover; // Se o rato está ou não em cima do botão
     bool pressed = false;
    
     Button(const char* text, int x, int y, int size, SDL_Renderer* renderer);
