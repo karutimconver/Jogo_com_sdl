@@ -20,6 +20,8 @@ Button::Button(const char* text, int x, int y, int size, SDL_Renderer* renderer)
 // --------------------------------
 
 void Button::check_mouse() {
+    this->pressed = false;
+    
     int mouse_x;
     int mouse_y;
 

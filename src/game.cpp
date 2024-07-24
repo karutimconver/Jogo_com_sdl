@@ -31,6 +31,15 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
 
     pause_text.push_back(paused);
     pause_text.push_back(unpause);
+
+    // Criar estado de fim do jogo
+    Text gameover("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 30, 24, _renderer);
+    Button retry("try again", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 10, 16, _renderer);
+    Button menu("menu", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 25, 16, _renderer);
+
+    gameover_text.push_back(gameover);
+    gameover_buttons.push_back(retry);
+    gameover_buttons.push_back(menu);
 }
 
 void Game::run(int n) {
@@ -39,6 +48,8 @@ void Game::run(int n) {
     int player1_keys [4] = {SDL_SCANCODE_D, SDL_SCANCODE_A, SDL_SCANCODE_W, SDL_SCANCODE_SPACE};
     int player2_keys [4] = {SDL_SCANCODE_RIGHT, SDL_SCANCODE_LEFT, SDL_SCANCODE_UP, SDL_SCANCODE_RCTRL};
     
+    this->player_num = n;
+
     switch (n) {
         case 1:
             ships.push_back(new Ship(3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, player1_keys, &lasers, 0));
@@ -164,6 +175,25 @@ void Game::gameLoop() {
             }
         }
 
+        // Estado de fim de jogo
+        else if (gameState == GameState::GAMEOVER) {
+            for (Button& button : gameover_buttons) {
+                button.update();
+                
+                if (button.pressed) {
+                    gameState = GameState::RUNNING;
+
+                    std::cout << button.get_text();
+                    if (button.get_text() == "try again") { 
+                        this->run(this->player_num); 
+                    }
+                    if (button.get_text() == "menu") { 
+                        gameState = GameState::MENU;
+                    }
+                }
+            }
+        }
+
         keyboard_state = NULL;
 
         draw();
@@ -211,6 +241,17 @@ void Game::draw() {
         }
 
         break;
+
+    case GameState::GAMEOVER:
+        for (Text& text : gameover_text) {
+            text.draw(_renderer);
+        }
+        
+        for (Button& button : gameover_buttons) {
+            button.draw(_renderer);
+        }
+
+        break;
     
     case GameState::MENU:
         for (Text& text : menu_text) {
@@ -246,7 +287,7 @@ void Game::handleEvents() {
                     std::cout << "Unpaused\n";
                     gameState = GameState::RUNNING;
                 }
-                else {
+                else if (gameState == GameState::RUNNING) {
                     std::cout << "paused \n";
                     gameState = GameState::PAUSED;
                 }

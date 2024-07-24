@@ -23,6 +23,8 @@ private:
 
     unsigned short int level = 0;
 
+    int player_num = 0;
+
     long double dt;
 public:
     GameState gameState = GameState::MENU;
@@ -38,5 +40,7 @@ public:
     std::vector<Laser*> lasers; 
     std::vector<Text> menu_text;
     std::vector<Button> menu_buttons;
+    std::vector<Text> gameover_text;
+    std::vector<Button> gameover_buttons;
     std::vector<Text> pause_text;
 };
