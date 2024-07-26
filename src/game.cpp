@@ -328,7 +328,7 @@ void Game::handleEvents() {
                     break;
             }
 
-        case SDL_WINDOWEVENT_RESIZED:
+        case SDL_WINDOWEVENT_SIZE_CHANGED:
             int width;
             int height;
 
@@ -338,7 +338,7 @@ void Game::handleEvents() {
             if (height < SCREEN_HEIGHT) height = SCREEN_HEIGHT; 
 
             SDL_SetWindowSize(_window, width, height);
-            SDL_RaiseWindow(_window);
+            SDL_RenderSetViewport(_renderer, &border);
             break;
     }
 }
