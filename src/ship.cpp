@@ -106,7 +106,7 @@ void Ship::update(const Uint8* keyboard_state) {
   }
 };
 
-void Ship::draw(SDL_Renderer* renderer) {
+void Ship::draw(SDL_Renderer* renderer, int offsetx, int offsety) {
     // Coordenadas Polares
     unsigned short int p1_angle    = (360 * 100) + angle;                   // ângulo em graus do ponto 1
     unsigned short int p1_distance = 14;                                    // distancia em graus do ponto 1
@@ -126,10 +126,10 @@ void Ship::draw(SDL_Renderer* renderer) {
 
     //  Desenhar nave
     if (!invincible) {
-      aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, SDL_ALPHA_OPAQUE);
+      aatrigonRGBA(renderer, tip_x + offsetx, tip_y + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, SDL_ALPHA_OPAQUE);
     }
     else {
-      aatrigonRGBA(renderer, tip_x, tip_y, x2, y2, x3, y3, 255, 255, 255, 120);
+      aatrigonRGBA(renderer, tip_x + offsetx, tip_y + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, 120);
     }
 
     // GUI
@@ -140,10 +140,10 @@ void Ship::draw(SDL_Renderer* renderer) {
       if (name == nullptr) {
           switch (this->n) {
           case 1:
-            name = new Text("p1", x, y, 8, renderer);
+            name = new Text("p1", x + offsetx, y + offsety, 8, renderer);
             break;
           case 2:
-            name = new Text("p2", x, y, 8, renderer);
+            name = new Text("p2", x + offsetx, y + offsety, 8, renderer);
             break;
         } 
       }
@@ -172,7 +172,7 @@ void Ship::draw(SDL_Renderer* renderer) {
         x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
         y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
-        aatrigonRGBA(renderer, x1, y1, x2, y2, x3, y3, 255, 255, 255, 210);
+        aatrigonRGBA(renderer, x1 + offsetx, y1 + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, 210);
         
         x += calculate_distance(x2, y2, x3, y3) + 3;
       }
@@ -192,7 +192,7 @@ void Ship::draw(SDL_Renderer* renderer) {
         x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
         y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
-        aatrigonRGBA(renderer, x1, y1, x2, y2, x3, y3, 255, 255, 255, 210);
+        aatrigonRGBA(renderer, x1 + offsetx, y1 + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, 210);
         
         x += calculate_distance(x2, y2, x3, y3) + 3;
       }
@@ -202,13 +202,13 @@ void Ship::draw(SDL_Renderer* renderer) {
     if (this->n != 0) {
       name->x = this->x;
       name->y = this->y + 24;
-      name->draw(renderer);
+      name->draw(renderer, offsetx, offsety);
       
     }
 
     // Desenhos de debug
     if (DEBUGGING) {
-      aacircleRGBA(renderer, x, y, radius, 120, 255, 120, SDL_ALPHA_OPAQUE);
-      aacircleRGBA(renderer, x, y, 80, 120, 255, 120, SDL_ALPHA_OPAQUE);
+      aacircleRGBA(renderer, x + offsetx, y + offsety, radius, 120, 255, 120, SDL_ALPHA_OPAQUE);
+      aacircleRGBA(renderer, x + offsetx, y + offsety, 80, 120, 255, 120, SDL_ALPHA_OPAQUE);
     }
 };

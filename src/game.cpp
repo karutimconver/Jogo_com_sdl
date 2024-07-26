@@ -221,7 +221,7 @@ void Game::draw() {
     SDL_RenderClear(_renderer);
 
     SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-    SDL_RenderSetViewport(_renderer, &border);
+    //SDL_RenderSetViewport(_renderer, &border);
     
     // Inicio dos desenhos
     // Desenhar bordas
@@ -232,7 +232,7 @@ void Game::draw() {
     switch (gameState) {
     case GameState::RUNNING:
         for (Ship* player : ships) {
-            player->draw(_renderer);
+            player->draw(_renderer, offsetx, offsety);
         }
         
         for (Asteroid* asteroid : asteroids) {
@@ -240,14 +240,14 @@ void Game::draw() {
         }
 
         for (Laser* laser : lasers) {
-            laser->draw(_renderer);
+            laser->draw(_renderer, offsetx, offsety);
         }
 
         break;
     
     case GameState::PAUSED:
         for (Ship* player : ships) {
-            player->draw(_renderer);
+            player->draw(_renderer, offsetx, offsety);
         }
         
         for (Asteroid* asteroid : asteroids) {
@@ -255,33 +255,33 @@ void Game::draw() {
         }
 
         for (Laser* laser : lasers) {
-            laser->draw(_renderer);
+            laser->draw(_renderer, offsetx, offsety);
         }
 
         for (Text& text : pause_text) {
-            text.draw(_renderer);
+            text.draw(_renderer, offsetx, offsety);
         }
 
         break;
 
     case GameState::GAMEOVER:
         for (Text& text : gameover_text) {
-            text.draw(_renderer);
+            text.draw(_renderer, offsetx, offsety);
         }
         
         for (Button& button : gameover_buttons) {
-            button.draw(_renderer);
+            button.draw(_renderer, offsetx, offsety);
         }
 
         break;
     
     case GameState::MENU:
         for (Text& text : menu_text) {
-            text.draw(_renderer);
+            text.draw(_renderer, offsetx, offsety);
         }
         
         for (Button& button : menu_buttons) {
-            button.draw(_renderer);
+            button.draw(_renderer, offsetx, offsety);
         }
 
         break;
@@ -332,15 +332,24 @@ void Game::handleEvents() {
             }
 
         case SDL_WINDOWEVENT_RESIZED:
-            int width;
-            int height;
-
             SDL_GetWindowSize(_window, &width, &height);
 
             if (width < SCREEN_WIDTH) width = SCREEN_WIDTH;
             if (height < SCREEN_HEIGHT) height = SCREEN_HEIGHT; 
 
             SDL_SetWindowSize(_window, width, height);
+
+            std::cout << "width" << width << "\n";
+            std::cout << "height" << height << "\n";
+
+            offsetx = std::max((width - SCREEN_WIDTH) / 2, 0);
+            offsety = std::max((height - SCREEN_HEIGHT) / 2, 0);
+
+            std::cout << "offsetx: " << offsetx << "\n";
+            std::cout << "offsety: " << offsety << "\n";
+
+            border = {offsetx, offsety, SCREEN_WIDTH, SCREEN_HEIGHT}; 
+
             break;
     }
 }

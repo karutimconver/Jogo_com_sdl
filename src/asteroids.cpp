@@ -94,7 +94,7 @@ void Asteroid::update(std::vector<Laser*>* lasers, std::vector<Ship*>* players) 
   this->collide(lasers, players);
 };
 
-void Asteroid::draw(SDL_Renderer* renderer, unsigned int offsetx, unsigned int offsety) {
+void Asteroid::draw(SDL_Renderer* renderer, int offsetx, int offsety) {
   // Criar array de pontos defenidos por coordenadas polares
   float points[this->vertices][2];
   for (int i = 0; i < this->vertices; i++) {

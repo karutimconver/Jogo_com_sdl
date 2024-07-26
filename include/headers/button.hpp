@@ -9,6 +9,8 @@ private:
     int height;
     int x;
     int y;
+    int ox;
+    int oy;
 
     void check_mouse();
 public:
@@ -18,6 +20,6 @@ public:
    
     Button(const char* text, int x, int y, int size, SDL_Renderer* renderer);
     void update();
-    void draw(SDL_Renderer* renderer);
+    void draw(SDL_Renderer* renderer, int offsetx, int offsety);
     const char * get_text();
 };

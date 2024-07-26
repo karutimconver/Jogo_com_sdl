@@ -22,5 +22,5 @@ public:
     void change_text(const char* text, SDL_Renderer* renderer);
     void change_color(Uint8 color [3], SDL_Renderer* renderer);
     const char * get_text();
-    void draw(SDL_Renderer* renderer);
+    void draw(SDL_Renderer* renderer, int offsetx, int offsety);
 };

@@ -61,9 +61,9 @@ const char * Text::get_text() {
 // | Desenho |
 // -----------
 
-void Text::draw(SDL_Renderer* renderer) {
-    rectangle.x = round(this->x - (rectangle.w / 2));  // Alinhamento no eixo Oy
-    rectangle.y = round(this->y - (rectangle.h / 2));  // Alinhamento no eixo Ox
+void Text::draw(SDL_Renderer* renderer, int offsetx, int offsety) {
+    rectangle.x = round(this->x + offsetx - (rectangle.w / 2));  // Alinhamento no eixo Oy
+    rectangle.y = round(this->y + offsety - (rectangle.h / 2));  // Alinhamento no eixo Ox
 
     SDL_RenderCopy(renderer, this->texture, NULL, &this->rectangle);
 }

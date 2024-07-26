@@ -10,6 +10,8 @@ Button::Button(const char* text, int x, int y, int size, SDL_Renderer* renderer)
     this->hover = false;
     this->x = x;
     this->y = y;
+    this->ox = x;
+    this->oy = y;
 
     this->width = strlen(text) * size / 2;
     this->height = size / 2;
@@ -52,16 +54,20 @@ void Button::update(){
     this->check_mouse();
 };
 
-void Button::draw(SDL_Renderer* renderer){
+void Button::draw(SDL_Renderer* renderer, int offsetx, int offsety){
+    x = ox + offsetx;
+    y = oy + offsety;
+    text->x = x;
+    text->y = y;
+
     if (hover) {
         Uint8 color [3] = {250, 247, 62};
         this->text->change_color(color, renderer);
     }
-    else {
-        
+    else {   
         Uint8 color [3] = {255, 255, 255};
         this->text->change_color(color, renderer);
     }
     
-    text->draw(renderer);
+    text->draw(renderer, 0, 0);
 };

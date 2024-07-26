@@ -59,6 +59,6 @@ void Laser::update() {
     this->count();
 };
 
-void Laser::draw(SDL_Renderer* renderer) {
-    aacircleRGBA(renderer, x, y, 0, 255, 255, 255, SDL_ALPHA_OPAQUE);
+void Laser::draw(SDL_Renderer* renderer, int offsetx, int offsety) {
+    aacircleRGBA(renderer, x + offsetx, y + offsety, 0, 255, 255, 255, SDL_ALPHA_OPAQUE);
 };

@@ -20,9 +20,11 @@ private:
 
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
-    unsigned int offsetx = 0;
-    unsigned int offsety = 0;
+    int offsetx = 0;           // desvio dos desenhos no eixo x 
+    int offsety = 0;           // desvio dos desenhos no eixo y (necessario quando se altera tamanho da janela)
 
+    int width = SCREEN_WIDTH;
+    int height = SCREEN_HEIGHT;
 
     SDL_Rect border = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     unsigned short int level;
