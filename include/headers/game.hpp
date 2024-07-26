@@ -20,21 +20,16 @@ private:
 
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
+    unsigned int offsetx = 0;
+    unsigned int offsety = 0;
 
+
+    SDL_Rect border = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     unsigned short int level;
-
     int player_num = 0;
 
     long double dt;
-public:
-    GameState gameState = GameState::MENU;
-
-    Game(const char* title, int x, int y, int w, int h, Uint32 flags);
-    
-    void run(int n);
-    void gameLoop();
-    void draw();
-
+ 
     std::vector<Ship*> ships;
     std::vector<Asteroid*> asteroids; 
     std::vector<Laser*> lasers; 
@@ -43,4 +38,12 @@ public:
     std::vector<Text> gameover_text;
     std::vector<Button> gameover_buttons;
     std::vector<Text> pause_text;
+public:
+    GameState gameState = GameState::MENU;
+
+    Game(const char* title, int x, int y, int w, int h, Uint32 flags);
+    
+    void run(int n);
+    void gameLoop();
+    void draw();
 };

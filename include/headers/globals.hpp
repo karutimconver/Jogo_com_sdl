@@ -7,8 +7,6 @@
 
 #define DT 1.0L/120.0L
 
-extern int opacity;
-
 int calculate_distance(int x1, int y1, int x2, int y2);
 
 struct Vec2d {

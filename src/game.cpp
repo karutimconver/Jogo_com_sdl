@@ -219,7 +219,13 @@ void Game::gameLoop() {
 void Game::draw() {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
+    SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
     // Inicio dos desenhos
+    // Desenhar bordas
+    if (SDL_RenderDrawRect(_renderer, &border) > 0)
+        std::cout << "Unable to draw border" << SDL_GetError();
+
+    // Desenhos de jogo
     switch (gameState) {
     case GameState::RUNNING:
         for (Ship* player : ships) {
@@ -227,7 +233,7 @@ void Game::draw() {
         }
         
         for (Asteroid* asteroid : asteroids) {
-            asteroid->draw(_renderer);
+            asteroid->draw(_renderer, offsetx, offsety);
         }
 
         for (Laser* laser : lasers) {
@@ -242,7 +248,7 @@ void Game::draw() {
         }
         
         for (Asteroid* asteroid : asteroids) {
-            asteroid->draw(_renderer);
+            asteroid->draw(_renderer, offsetx, offsety);
         }
 
         for (Laser* laser : lasers) {
@@ -321,5 +327,18 @@ void Game::handleEvents() {
                     }
                     break;
             }
+
+        case SDL_WINDOWEVENT_RESIZED:
+            int width;
+            int height;
+
+            SDL_GetWindowSize(_window, &width, &height);
+
+            if (width < SCREEN_WIDTH) width = SCREEN_WIDTH;
+            if (height < SCREEN_HEIGHT) height = SCREEN_HEIGHT; 
+
+            SDL_SetWindowSize(_window, width, height);
+            SDL_RaiseWindow(_window);
+            break;
     }
 }

@@ -94,7 +94,7 @@ void Asteroid::update(std::vector<Laser*>* lasers, std::vector<Ship*>* players) 
   this->collide(lasers, players);
 };
 
-void Asteroid::draw(SDL_Renderer* renderer) {
+void Asteroid::draw(SDL_Renderer* renderer, unsigned int offsetx, unsigned int offsety) {
   // Criar array de pontos defenidos por coordenadas polares
   float points[this->vertices][2];
   for (int i = 0; i < this->vertices; i++) {
@@ -109,15 +109,15 @@ void Asteroid::draw(SDL_Renderer* renderer) {
   Sint16 array_y[this->vertices];
 
   for (int j = 0; j < this->vertices; j++) {
-      array_x[j] = round(x + points[j][0] * cos(points[j][1] * M_PI / 180));
-      array_y[j] = round(y + points[j][0] * sin(points[j][1] * M_PI / 180));
+      array_x[j] = round(x + points[j][0] * cos(points[j][1] * M_PI / 180)) + offsetx;
+      array_y[j] = round(y + points[j][0] * sin(points[j][1] * M_PI / 180)) + offsety;
   }
 
   // Desenhar
   aapolygonRGBA(renderer, array_x, array_y, this->vertices, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
   if (DEBUGGING) {
-    aacircleRGBA(renderer, x, y, 0, 255, 120, 120, SDL_ALPHA_OPAQUE);
-    aacircleRGBA(renderer, x, y, radius, 255, 120, 120, SDL_ALPHA_OPAQUE);
+    aacircleRGBA(renderer, x + offsetx, y + offsety, 0, 255, 120, 120, SDL_ALPHA_OPAQUE);
+    aacircleRGBA(renderer, x + offsetx, y + offsety, radius, 255, 120, 120, SDL_ALPHA_OPAQUE);
   }
 };
