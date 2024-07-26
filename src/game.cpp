@@ -219,7 +219,10 @@ void Game::gameLoop() {
 void Game::draw() {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
+
     SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+    SDL_RenderSetViewport(_renderer, &border);
+    
     // Inicio dos desenhos
     // Desenhar bordas
     if (SDL_RenderDrawRect(_renderer, &border) > 0)
@@ -328,7 +331,7 @@ void Game::handleEvents() {
                     break;
             }
 
-        case SDL_WINDOWEVENT_SIZE_CHANGED:
+        case SDL_WINDOWEVENT_RESIZED:
             int width;
             int height;
 
@@ -338,7 +341,6 @@ void Game::handleEvents() {
             if (height < SCREEN_HEIGHT) height = SCREEN_HEIGHT; 
 
             SDL_SetWindowSize(_window, width, height);
-            SDL_RenderSetViewport(_renderer, &border);
             break;
     }
 }
