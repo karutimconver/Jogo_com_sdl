@@ -219,7 +219,6 @@ void Game::gameLoop() {
 }
 
 void Game::draw() {
-    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
 
     SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
@@ -289,10 +288,19 @@ void Game::draw() {
     }
 
     // Limpar desenhos fora das bordas 
-    SDL_Rect b1;
-    SDL_Rect b2;
-    SDL_Rect b3; 
-    SDL_Rect b4;
+    unsigned short thickness = 100;
+
+    SDL_Rect b1 = {0 - thickness + offsetx, 0 - thickness + offsety, thickness, SCREEN_HEIGHT + thickness * 2};
+    SDL_Rect b2 = {0 + offsetx, 0 - thickness + offsety, SCREEN_WIDTH, thickness};
+    SDL_Rect b3 = {0 + offsetx, SCREEN_HEIGHT + offsety, SCREEN_WIDTH, thickness}; 
+    SDL_Rect b4 = {SCREEN_WIDTH + offsetx, 0 - thickness + offsety, thickness, SCREEN_HEIGHT + thickness * 2};
+
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+    
+    SDL_RenderFillRect(_renderer, &b1);
+    SDL_RenderFillRect(_renderer, &b2);
+    SDL_RenderFillRect(_renderer, &b3);
+    SDL_RenderFillRect(_renderer, &b4);
     // Fim dos desenhos
     // A renderizar
     SDL_RenderPresent(_renderer);
@@ -337,14 +345,14 @@ void Game::handleEvents() {
                     }
                     break;
             }
-
-        case SDL_WINDOWEVENT_RESIZED:
-            break;
     }
 }
 
 int Game::special_event_callback(void *userdata, SDL_Event *event) {
     if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_EXPOSED) {
+        int width;
+        int height;
+
         SDL_GetWindowSize(_window, &width, &height);
 
         if (width < SCREEN_WIDTH) width = SCREEN_WIDTH;
@@ -356,7 +364,6 @@ int Game::special_event_callback(void *userdata, SDL_Event *event) {
         offsety = std::max((height - SCREEN_HEIGHT) / 2, 0);
 
         this->border = {offsetx, offsety, SCREEN_WIDTH, SCREEN_HEIGHT};
-        SDL_Rect viewport =  {offsetx, offsety, SCREEN_WIDTH, SCREEN_HEIGHT};
     }
 
     return 0;
