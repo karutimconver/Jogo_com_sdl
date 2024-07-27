@@ -106,7 +106,7 @@ void Ship::update(const Uint8* keyboard_state) {
   }
 };
 
-void Ship::draw(SDL_Renderer* renderer, int offsetx, int offsety) {
+void Ship::draw(SDL_Renderer* renderer, int offsetx, int offsety, Uint8 opacity) {
     // Coordenadas Polares
     unsigned short int p1_angle    = (360 * 100) + angle;                   // ângulo em graus do ponto 1
     unsigned short int p1_distance = 14;                                    // distancia em graus do ponto 1
@@ -126,10 +126,10 @@ void Ship::draw(SDL_Renderer* renderer, int offsetx, int offsety) {
 
     //  Desenhar nave
     if (!invincible) {
-      aatrigonRGBA(renderer, tip_x + offsetx, tip_y + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, SDL_ALPHA_OPAQUE);
+      aatrigonRGBA(renderer, tip_x + offsetx, tip_y + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, opacity);
     }
     else {
-      aatrigonRGBA(renderer, tip_x + offsetx, tip_y + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, 120);
+      aatrigonRGBA(renderer, tip_x + offsetx, tip_y + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, 120 < opacity ? 120 : opacity);
     }
 
     // GUI
@@ -172,8 +172,8 @@ void Ship::draw(SDL_Renderer* renderer, int offsetx, int offsety) {
         x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
         y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
-        aatrigonRGBA(renderer, x1 + offsetx, y1 + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, 210);
-        
+        aatrigonRGBA(renderer, x1 + offsetx, y1 + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, 210 < opacity ? 210 : opacity);
+
         x += calculate_distance(x2, y2, x3, y3) + 3;
       }
     }
@@ -192,7 +192,7 @@ void Ship::draw(SDL_Renderer* renderer, int offsetx, int offsety) {
         x3 = round(x + p3_distance * cos(p3_angle * M_PI / 180));
         y3 = round(y + p3_distance * sin(p3_angle * M_PI / 180));
 
-        aatrigonRGBA(renderer, x1 + offsetx, y1 + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, 210);
+        aatrigonRGBA(renderer, x1 + offsetx, y1 + offsety, x2 + offsetx, y2 + offsety, x3 + offsetx, y3 + offsety, 255, 255, 255, 210 < opacity ? 210 : opacity);
         
         x += calculate_distance(x2, y2, x3, y3) + 3;
       }
@@ -203,12 +203,11 @@ void Ship::draw(SDL_Renderer* renderer, int offsetx, int offsety) {
       name->x = this->x;
       name->y = this->y + 24;
       name->draw(renderer, offsetx, offsety);
-      
     }
 
     // Desenhos de debug
     if (DEBUGGING) {
-      aacircleRGBA(renderer, x + offsetx, y + offsety, radius, 120, 255, 120, SDL_ALPHA_OPAQUE);
-      aacircleRGBA(renderer, x + offsetx, y + offsety, 80, 120, 255, 120, SDL_ALPHA_OPAQUE);
+      aacircleRGBA(renderer, this->x + offsetx, this->y + offsety, radius, 120, 255, 120, opacity);
+      aacircleRGBA(renderer, this->x + offsetx, this->y + offsety, 80, 120, 255, 120, opacity);
     }
 };

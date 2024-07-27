@@ -34,5 +34,5 @@ public:
     Asteroid(int x, int y, int size);
     ~Asteroid();
     void update(std::vector<Laser*>* lasers, std::vector<Ship*>* players);
-    void draw(SDL_Renderer* renderer, int offsetx, int offsety);
+    void draw(SDL_Renderer* renderer, int offsetx, int offsety, Uint8 opacity);
 };

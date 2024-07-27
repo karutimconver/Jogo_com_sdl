@@ -25,5 +25,5 @@ public:
     Laser(int x, int y, float angle);
     ~Laser();
     void update();
-    void draw(SDL_Renderer* renderer, int offsetx, int offsety);
+    void draw(SDL_Renderer* renderer, int offsetx, int offsety, Uint8 opacity);
 };

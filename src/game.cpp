@@ -232,30 +232,30 @@ void Game::draw() {
     switch (gameState) {
     case GameState::RUNNING:
         for (Ship* player : ships) {
-            player->draw(_renderer, offsetx, offsety);
+            player->draw(_renderer, offsetx, offsety, opacity);
         }
         
         for (Asteroid* asteroid : asteroids) {
-            asteroid->draw(_renderer, offsetx, offsety);
+            asteroid->draw(_renderer, offsetx, offsety, opacity);
         }
 
         for (Laser* laser : lasers) {
-            laser->draw(_renderer, offsetx, offsety);
+            laser->draw(_renderer, offsetx, offsety, opacity);
         }
 
         break;
     
     case GameState::PAUSED:
         for (Ship* player : ships) {
-            player->draw(_renderer, offsetx, offsety);
+            player->draw(_renderer, offsetx, offsety, opacity);
         }
         
         for (Asteroid* asteroid : asteroids) {
-            asteroid->draw(_renderer, offsetx, offsety);
+            asteroid->draw(_renderer, offsetx, offsety, opacity);
         }
 
         for (Laser* laser : lasers) {
-            laser->draw(_renderer, offsetx, offsety);
+            laser->draw(_renderer, offsetx, offsety, opacity);
         }
 
         for (Text& text : pause_text) {
@@ -322,10 +322,12 @@ void Game::handleEvents() {
             if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
                 if (gameState == GameState::PAUSED) {
                     std::cout << "Unpaused \n";
+                    opacity = 255;
                     gameState = GameState::RUNNING;
                 }
                 else if (gameState == GameState::RUNNING) {
                     std::cout << "paused \n";
+                    opacity = 80;
                     gameState = GameState::PAUSED;
                 }
             }

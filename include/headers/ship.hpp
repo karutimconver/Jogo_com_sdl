@@ -45,5 +45,5 @@ public:
     Ship(unsigned short int lives, unsigned short int x, unsigned short int y, int keys [4], std::vector<Laser*>* lasers, unsigned short int n);
     ~Ship();
     void update(const Uint8* keyboard_state);
-    void draw(SDL_Renderer* renderer, int offsetx, int offsety);
+    void draw(SDL_Renderer* renderer, int offsetx, int offsety, Uint8 opacity);
 };
