@@ -1,5 +1,7 @@
 #include <headers/game.hpp>
 
+static int SDLCALL special_event_callback(void *userdata, SDL_Event *event);
+
 // ------------------------------
 // | Construtor e Inicializador |
 // ------------------------------
@@ -221,7 +223,6 @@ void Game::draw() {
     SDL_RenderClear(_renderer);
 
     SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-    //SDL_RenderSetViewport(_renderer, &border);
     
     // Inicio dos desenhos
     // Desenhar bordas
@@ -286,6 +287,12 @@ void Game::draw() {
 
         break;
     }
+
+    // Limpar desenhos fora das bordas 
+    SDL_Rect b1;
+    SDL_Rect b2;
+    SDL_Rect b3; 
+    SDL_Rect b4;
     // Fim dos desenhos
     // A renderizar
     SDL_RenderPresent(_renderer);
@@ -332,24 +339,25 @@ void Game::handleEvents() {
             }
 
         case SDL_WINDOWEVENT_RESIZED:
-            SDL_GetWindowSize(_window, &width, &height);
-
-            if (width < SCREEN_WIDTH) width = SCREEN_WIDTH;
-            if (height < SCREEN_HEIGHT) height = SCREEN_HEIGHT; 
-
-            SDL_SetWindowSize(_window, width, height);
-
-            std::cout << "width" << width << "\n";
-            std::cout << "height" << height << "\n";
-
-            offsetx = std::max((width - SCREEN_WIDTH) / 2, 0);
-            offsety = std::max((height - SCREEN_HEIGHT) / 2, 0);
-
-            std::cout << "offsetx: " << offsetx << "\n";
-            std::cout << "offsety: " << offsety << "\n";
-
-            border = {offsetx, offsety, SCREEN_WIDTH, SCREEN_HEIGHT}; 
-
             break;
     }
+}
+
+int Game::special_event_callback(void *userdata, SDL_Event *event) {
+    if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_EXPOSED) {
+        SDL_GetWindowSize(_window, &width, &height);
+
+        if (width < SCREEN_WIDTH) width = SCREEN_WIDTH;
+        if (height < SCREEN_HEIGHT) height = SCREEN_HEIGHT; 
+
+        SDL_SetWindowSize(_window, width, height);
+
+        offsetx = std::max((width - SCREEN_WIDTH) / 2, 0);
+        offsety = std::max((height - SCREEN_HEIGHT) / 2, 0);
+
+        this->border = {offsetx, offsety, SCREEN_WIDTH, SCREEN_HEIGHT};
+        SDL_Rect viewport =  {offsetx, offsety, SCREEN_WIDTH, SCREEN_HEIGHT};
+    }
+
+    return 0;
 }

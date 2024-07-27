@@ -44,7 +44,7 @@ public:
     GameState gameState = GameState::MENU;
 
     Game(const char* title, int x, int y, int w, int h, Uint32 flags);
-    
+    int special_event_callback(void *userdata, SDL_Event *event);
     void run(int n);
     void gameLoop();
     void draw();
