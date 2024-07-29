@@ -22,6 +22,8 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     _window = SDL_CreateWindow(title, x, y, w, h, flags);
     _renderer = SDL_CreateRenderer(_window, -1, 0);
 
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "best");
+
     // Criar Menu
     Text main_title("Asteroids", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3, 30, _renderer);
     Button single_player("single player", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 16, _renderer);
@@ -32,11 +34,13 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags) {
     menu_buttons.push_back(multiplayer);
 
     // Criar texto de pausa
-    Text paused("PAUSED", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 20, 20, _renderer);
+    Text paused("PAUSED", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 30, 20, _renderer);
     Text unpause("press 'esc' to unpause", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 10, 16, _renderer);
+    Text quit("press 'q' to go to menu", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 40, 16, _renderer);
 
     pause_text.push_back(paused);
     pause_text.push_back(unpause);
+    pause_text.push_back(quit);
 
     // Criar estado de fim do jogo
     Text gameover("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 60, 30, _renderer);
@@ -271,7 +275,7 @@ void Game::draw() {
         }
         
         for (Button& button : gameover_buttons) {
-            button.draw(_renderer, offsetx, offsety);
+            button.draw(_renderer, offsetx, offsety, scalefactor);
         }
 
         break;
@@ -282,7 +286,7 @@ void Game::draw() {
         }
         
         for (Button& button : menu_buttons) {
-            button.draw(_renderer, offsetx, offsety);
+            button.draw(_renderer, offsetx, offsety, scalefactor);
         }
 
         break;
@@ -298,10 +302,10 @@ void Game::draw() {
 
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     
-    //SDL_RenderFillRect(_renderer, &b1);
-    //SDL_RenderFillRect(_renderer, &b2);
-    //SDL_RenderFillRect(_renderer, &b3);
-    //SDL_RenderFillRect(_renderer, &b4);
+    SDL_RenderFillRect(_renderer, &b1);
+    SDL_RenderFillRect(_renderer, &b2);
+    SDL_RenderFillRect(_renderer, &b3);
+    SDL_RenderFillRect(_renderer, &b4);
     // Fim dos desenhos
     // A renderizar
     SDL_RenderPresent(_renderer);
@@ -320,17 +324,32 @@ void Game::handleEvents() {
             gameState = GameState::EXIT;
             break;
         case SDL_KEYDOWN:
-            if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
-                if (gameState == GameState::PAUSED) {
-                    std::cout << "Unpaused \n";
-                    opacity = 255;
-                    gameState = GameState::RUNNING;
-                }
-                else if (gameState == GameState::RUNNING) {
-                    std::cout << "paused \n";
-                    opacity = 80;
-                    gameState = GameState::PAUSED;
-                }
+            switch (event.key.keysym.scancode) {
+                case SDL_SCANCODE_ESCAPE:
+                    if (gameState == GameState::PAUSED) {
+                        std::cout << "Unpaused \n";
+                        opacity = 255;
+                        gameState = GameState::RUNNING;
+                    }
+                    else if (gameState == GameState::RUNNING) {
+                        std::cout << "paused \n";
+                        opacity = 80;
+                        gameState = GameState::PAUSED;
+                    }
+
+                    break;
+
+                case SDL_SCANCODE_Q:
+                    if (gameState == GameState::PAUSED) {
+                        ships.clear();
+                        asteroids.clear();
+                        lasers.clear();
+
+                        opacity = 255;
+                        
+                        gameState = GameState::MENU;
+                    }
+                    break;
             }
 
             break;

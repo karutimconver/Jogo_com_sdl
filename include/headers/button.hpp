@@ -5,6 +5,8 @@
 
 class Button {
 private:
+    int bwidth;
+    int bheight;
     int width;
     int height;
     int x;
@@ -20,6 +22,6 @@ public:
    
     Button(const char* text, int x, int y, int size, SDL_Renderer* renderer);
     void update();
-    void draw(SDL_Renderer* renderer, int offsetx, int offsety);
+    void draw(SDL_Renderer* renderer, int offsetx, int offsety, float scalefactor);
     const char * get_text();
 };
