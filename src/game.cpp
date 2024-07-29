@@ -375,8 +375,8 @@ int Game::special_event_callback(void *userdata, SDL_Event *event) {
         std::cout << "height / SCREEN_HEIGHT: " << height / SCREEN_HEIGHT << "\n";
         std::cout << "scalefactor: " << scalefactor << "\n";
 
-        offsetx = scalefactorx > scalefactory ? round((double) (width - SCREEN_WIDTH * scalefactor) / (double) 2) : 0;
-        offsety = scalefactorx < scalefactory ? round((double) (height - SCREEN_HEIGHT * scalefactor) / (double) 2) : 0;
+        offsetx = scalefactorx > scalefactory ? round((double) (width - SCREEN_WIDTH * scalefactor) / (double) 2 / scalefactor) : 0;
+        offsety = scalefactorx < scalefactory ? round((double) (height - SCREEN_HEIGHT * scalefactor) / (double) 2 / scalefactor) : 0;
 
         this->border = {offsetx, offsety, SCREEN_WIDTH, SCREEN_HEIGHT};
     }
