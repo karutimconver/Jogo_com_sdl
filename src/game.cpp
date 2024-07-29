@@ -222,7 +222,8 @@ void Game::draw() {
     SDL_RenderClear(_renderer);
 
     SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-    
+    SDL_RenderSetScale(_renderer, scalefactor, scalefactor);
+
     // Inicio dos desenhos
     // Desenhar bordas
     if (SDL_RenderDrawRect(_renderer, &border) > 0)
@@ -297,10 +298,10 @@ void Game::draw() {
 
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     
-    SDL_RenderFillRect(_renderer, &b1);
-    SDL_RenderFillRect(_renderer, &b2);
-    SDL_RenderFillRect(_renderer, &b3);
-    SDL_RenderFillRect(_renderer, &b4);
+    //SDL_RenderFillRect(_renderer, &b1);
+    //SDL_RenderFillRect(_renderer, &b2);
+    //SDL_RenderFillRect(_renderer, &b3);
+    //SDL_RenderFillRect(_renderer, &b4);
     // Fim dos desenhos
     // A renderizar
     SDL_RenderPresent(_renderer);
@@ -360,10 +361,22 @@ int Game::special_event_callback(void *userdata, SDL_Event *event) {
         if (width < SCREEN_WIDTH) width = SCREEN_WIDTH;
         if (height < SCREEN_HEIGHT) height = SCREEN_HEIGHT; 
 
+        std::cout << "width: " << width << "\n";
+        std::cout << "height: " << height << "\n";
+
         SDL_SetWindowSize(_window, width, height);
 
-        offsetx = std::max((width - SCREEN_WIDTH) / 2, 0);
-        offsety = std::max((height - SCREEN_HEIGHT) / 2, 0);
+        float scalefactorx = ((float) width / (float) SCREEN_WIDTH);
+        float scalefactory = ((float) height / (float) SCREEN_HEIGHT);
+
+        scalefactor = scalefactorx < scalefactory ? scalefactorx : scalefactory;
+
+        std::cout << "width / SCREEN_WIDTH: " << width / SCREEN_WIDTH << "\n";
+        std::cout << "height / SCREEN_HEIGHT: " << height / SCREEN_HEIGHT << "\n";
+        std::cout << "scalefactor: " << scalefactor << "\n";
+
+        offsetx = scalefactorx > scalefactory ? round((double) (width - SCREEN_WIDTH * scalefactor) / (double) 2) : 0;
+        offsety = scalefactorx < scalefactory ? round((double) (height - SCREEN_HEIGHT * scalefactor) / (double) 2) : 0;
 
         this->border = {offsetx, offsety, SCREEN_WIDTH, SCREEN_HEIGHT};
     }

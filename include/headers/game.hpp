@@ -22,6 +22,7 @@ private:
     SDL_Renderer* _renderer = nullptr;
     int offsetx = 0;           // desvio dos desenhos no eixo x 
     int offsety = 0;           // desvio dos desenhos no eixo y (necessario quando se altera tamanho da janela)
+    float scalefactor = 1.0f;
     Uint8 opacity = 255;
 
     SDL_Rect border = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
